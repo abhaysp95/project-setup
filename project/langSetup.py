@@ -131,7 +131,7 @@ class {gotFile.stem} {{
             print("Enter correct values: " + ve)
         else:
             for x in range(count):
-                className.append(input(str(x + 1) + ": "))
+                className.append((input(str(x + 1) + ": ")).title())
             choice = input("Separate Main.java? [y/n]: ")
             if choice == 'y':
                 className.append('Main')
