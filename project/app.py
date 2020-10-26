@@ -26,15 +26,15 @@ def main(language, name, gitit):
         langs = langSetup.LangJava(name)
         langs.setup()
     elif language.lower() == "python":
-        print("project setup for Java language, named: {}".format(name))
+        print("project setup for Python language, named: {}".format(name))
         langs = langSetup.LangPython(name)
         langs.setup()
     elif language.lower() == "webd":
-        print("project setup for Java language, named: {}".format(name))
+        print("project setup for Web Designing, named: {}".format(name))
         langs = langSetup.LangWebD(name)
         langs.setup()
     elif language.lower() in ["servlet", "java-servlet", "servlet-java"]:
-        print("project setup for Java language, named: {}".format(name))
+        print("project setup for Java Servlet, named: {}".format(name))
         langs = langSetup.LangServlet(name)
         langs.setup()
     if gitit:
