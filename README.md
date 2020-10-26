@@ -2,7 +2,7 @@
 
 Have project setup **instantly** on _cli_.
 
-As programmer and terminal and terminal tools lover, I wanted something which will ease the redundant task of setting up project for the languages I use. The following project helps in achieving just that.
+As programmer and terminal(and terminal tools) lover, I wanted something which will ease the redundant task of setting up project for the languages I use. The following project helps in achieving just that.
 
 Let's see how it is done. Here's a project creation demo for `java` language:
 
