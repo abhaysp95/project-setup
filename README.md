@@ -60,3 +60,7 @@ And here's the directory hierarchy for all the supported languages:
 * **Java Servlet**:
 
 ![servlet-dir-struct](sshots/structure-servlet.png)
+
+```
+Note: This project is still in development stage
+```
