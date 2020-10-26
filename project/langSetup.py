@@ -286,3 +286,36 @@ setup(
         ],
     }},
 )""")
+
+
+class LangWebD(SetProject):
+    """ further project setup for Web Designing languages """
+
+    def __init__(self, name='new-project'):
+        super().__init__(name)
+
+    def setup(self):
+        index = self.path / 'index.html'
+        style = self.path / 'style.css'
+        script = self.path / 'script.js'
+        extras = self.path / 'extras'
+        Path.touch(index)
+        Path.touch(style)
+        Path.touch(script)
+        extras.mkdir()
+        with open(index, 'w') as file:
+            file.writelines(f"""<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link type="text/css" rel="stylesheet" href="style.css">
+
+        <title>Pig Game</title>
+    </head>
+    <body>
+        <script src="app.js"></script>
+    </body>
+</html>""")
+
+
+  #######################################################################
