@@ -93,7 +93,7 @@ clean:
 
 
 class LangJava(SetProject):
-    """ further project setup for C language """
+    """ further project setup for Java language """
 
     def __init__(self, name='new-project'):
         super().__init__(name)
@@ -151,7 +151,7 @@ class {gotFile.stem} {{
 
 
 class LangServlet(SetProject):
-    """ further project setup for Web Designing languages """
+    """ further project setup for Java Servlet languages """
 
     def __init__(self, name='new-project'):
         super().__init__(name)
