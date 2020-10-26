@@ -146,7 +146,96 @@ class {gotFile.stem} {{
             else:
                 print("Error: There must atleast on class file")
                 self.path.rmdir()
+                print("Exiting !!!")
                 exit(2)
+
+
+class LangServlet(SetProject):
+    """ further project setup for Web Designing languages """
+
+    def __init__(self, name='new-project'):
+        super().__init__(name)
+
+    def __writeToFiles(self):
+        with open("index.html", 'w') as file:
+            file.writelines(f"""<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <form action="" method="get">
+        </form>
+    </body>
+</html>""")
+        with open(self.path / 'WEB-INF' / 'web.xml', 'w') as file:
+            file.writelines(f"""<web-app>
+    <servlet>
+        <servlet-name></servlet-name>
+        <servlet-class></servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name></servlet-name>
+        <url-pattern></url-pattern>
+    </servlet-mapping>
+</web-app>""")
+        for javafile in self.packageName.rglob("*.java"):
+            with open(javafile, 'w') as file:
+                file.writelines(f"""package {self.packageName};
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
+
+public class {javafile.stem.title()} extends HttpServlet {{
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {{
+        /** code */
+    }}
+}}""")
+
+
+    def setup(self):
+        src = self.path / 'src'
+        classes = self.path / 'WEB-INF' / 'classes'
+        findex = self.path / 'index.html'
+        fwebxml = self.path / 'WEB-INF' / 'web.xml'
+        self.packageName = input("Enter package name(hostname will be default package name): ")
+        if self.packageName:
+            self.packageName = src / ('com') / self.packageName
+        else:
+            self.packageName = src / ('com') / uname()[1]
+        classfiles = list()
+        create = False
+        while not create:
+            count = input("Count for class names[if single class then enter that class name]: ")
+            if count.isdigit():
+                print("Enter class names: ")
+                for x in range(int(count)):
+                    classfiles.append(self.packageName / ((input(str(x + 1) + ": ")).title() + ".java"))
+                create = True
+            elif count:
+                classfiles.append(self.packageName / (count.title() + ".java"))
+                create = True
+            else:
+                choice = input("Providing class file is necessary, Create again[y/n]: ")
+                if not choice:
+                    self.path.rmdir()
+                    print("Entered nothing, Exiting !!!")
+                    exit(2)
+        if len(classfiles) > 0:
+            src.mkdir()
+            classes.mkdir(parents=True)
+            self.packageName.mkdir(parents=True)
+            Path.touch(findex)
+            Path.touch(fwebxml)
+            for classfile in classfiles:
+                Path.touch(classfile)
+                LangServlet.__writeToFiles(self)
+        else:
+            print("providing a class name is necessary")
+            print("Exiting !!!")
+            exit(2)
 
 
 class LangPython(SetProject):
