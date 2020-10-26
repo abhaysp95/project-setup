@@ -13,24 +13,30 @@ from project import langSetup
 def main(language, name, gitit):
     ''' This here is the help for making project '''
 
-    if language == 'c' or language == 'C':
+    if language.lower() == 'c':
         print("project setup for C language, named: {}".format(name))
         langs = langSetup.LangC(name)
         langs.setup()
-    elif language in ["Cpp", "cpp", "C++", "c++"]:
+    elif language.lower() in ["cpp", "c++"]:
         print("project setup for C++ language, named: {}".format(name))
         langs = langSetup.LangCpp(name)
         langs.setup()
-    elif language == "java" or language == "Java":
+    elif language.lower() == "java":
         print("project setup for Java language, named: {}".format(name))
         langs = langSetup.LangJava(name)
         langs.setup()
-    elif language == "python" or language == "Python":
+    elif language.lower() == "python":
         print("project setup for Java language, named: {}".format(name))
         langs = langSetup.LangPython(name)
         langs.setup()
-    elif language == "webd" or language == "Webd":
+    elif language.lower() == "webd":
         print("project setup for Java language, named: {}".format(name))
+        langs = langSetup.LangWebD(name)
+        langs.setup()
+    elif language.lower() in ["servlet", "java-servlet", "servlet-java"]:
+        print("project setup for Java language, named: {}".format(name))
+        langs = langSetup.LangServlet(name)
+        langs.setup()
     if gitit:
         print('initializing git setup')
     else:
