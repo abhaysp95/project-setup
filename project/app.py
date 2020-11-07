@@ -50,7 +50,20 @@ def main(language, name, gitit):
         print("project setup for Java Servlet, named: {}".format(name))
         langs = langSetup.LangServlet(name)
         langs.setup()
-    if gitit:
-        print('initializing git setup')
     else:
-        print('no git setup')
+        print("Language not supported or not correct language name")
+        exit(2)
+    extraSetup(name, gitit)
+
+
+def extraSetup(dirname, isgit):
+    """additional setup"""
+    if isgit:
+        subprocess.run(["git", "init"], cwd=dirname)
+        subprocess.run(["git", "add", "*"], cwd=dirname)
+        subprocess.run(["git", "commit", "-m", "'initial commit'"], cwd=dirname)
+
+
+if __name__ == "__main__":
+    print("Not a stand-alone script")
+    exit(1)
