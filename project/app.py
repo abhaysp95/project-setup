@@ -1,5 +1,7 @@
 import click
+from sys import exit
 from project import langSetup
+import subprocess
 
 # TODO:
 # see that if click provides a way to only accept provided values for a argument(like argparse)
@@ -11,7 +13,18 @@ from project import langSetup
 @click.option('--name', '-n', prompt='Input Project Name', help='Provide the name of project')
 @click.option('--gitit', '-g', is_flag=True, help='Want git setup?')
 def main(language, name, gitit):
-    ''' This here is the help for making project '''
+    '''Project Setup Helper:
+
+    Current Language Support:
+
+    [C, C++, Java, Java-Servlet, Python, Web-Designing]
+
+    You can provide '-g' or '--gitit' flag to initialize git inside the project of yours.
+
+    You'll be provided option to select compiler for C/C++ projects.
+    Default compiler for 'C' will be "cc" which is generally an aliased form of "gcc" in linux.
+    For 'C++' will be 'g++'
+    '''
 
     if language.lower() == 'c':
         print("project setup for C language, named: {}".format(name))
