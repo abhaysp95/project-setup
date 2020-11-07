@@ -124,35 +124,97 @@ class LangCpp(SetProject):
     def __init__(self, name='new-project'):
         super().__init__(name)
 
+    def __writeToFiles(self):
+        """write some initial data to files"""
+        with open(self.mfile, 'w') as file:
+            file.writelines(f"""// main file
+
+#include <iostream>
+
+int main(int argc, char **argv) {{
+    /* code here */
+    return 0;
+}}""")
+        with open(self.hefile, 'w') as file:
+            file.write("#pragma once")
+        with open(self.sefile, 'w') as file:
+            file.write(f"#include \"../inc/{self.hefile.stem}.hpp\"")
+        with open(self.makef, 'w') as file:
+            file.writelines(f"""# /* --- Makefile --- */
+
+CC     = {self.compiler}
+CFLAG  = -Wall -std=c++14
+CDFLAG = -Wall -std=c++14 -g
+LD     = {self.compiler}
+LFLAG  =
+
+
+SRC_DIR   = src
+OBJ_DIR   = obj
+INC_DIR   = inc
+BIN_DIR   = bin
+DEBUG_DIR = debug
+DIRS      = ${{BIN_DIR}} ${{OBJ_DIR}} ${{DEBUG_DIR}}
+
+
+SRC       = $(wildcard ${{SRC_DIR}}/*.cpp)
+OBJ       = $(addprefix ${{OBJ_DIR}}/, $(notdir ${{SRC:.cpp  =.o}}))
+BIN       = ${{BIN_DIR}}/$(notdir $(realpath .))
+DEBUG_OBJ = $(addprefix ${{DEBUG_DIR}}/, $(notdir ${{SRC:.cpp=.o}}))
+DEBUG_BIN = $(addprefix ${{DEBUG_DIR}}/, $(notdir $(realpath .)))
+
+
+all: dir ${{BIN}}
+
+dir:
+\tmkdir -p ${{DIRS}}
+
+
+${{OBJ_DIR}}/%.o: ${{SRC_DIR}}/%.cpp
+\t-@echo "compiling $? -> $@"
+\t${{CC}} ${{CFLAG}} -I ${{INC_DIR}} -c -o $@ $^
+
+${{BIN}}: ${{OBJ}}
+\t-@echo "Linking $? -> $@"
+\t${{LD}} ${{LFLAG}} -o $@ ${{OBJ_DIR}}/*.o
+
+
+debug: dir ${{DEBUG_BIN}}
+
+${{DEBUG_DIR}}/%.o: ${{SRC_DIR}}/%.cpp
+\t-@echo "compiling $? -> $@"
+\t${{CC}} ${{CDFLAG}} -I ${{INC_DIR}} -c -o $@ $^
+
+${{DEBUG_BIN}}: ${{DEBUG_OBJ}}
+\t-@echo "Linking to -> $@"
+\t${{LD}} ${{LFLAG}} -o $@ ${{DEBUG_DIR}}/*.o
+
+
+clean:
+\trm -rf ${{DIRS}}
+
+.SILENT:
+.PHONY: all dir debug clean""")
+
     def setup(self):
         src = self.path / 'src'
         obj = self.path / 'obj'
-        mfile = src / 'main.cpp'
-        hfile = input("Press enter if don't want header file created: ")
-        sfile = ""
-        makef = self.path / 'Makefile'
+        inc = self.path / 'inc'
+        self.mfile = src / 'main.cpp'
+        self.hfile = input("Press enter if don't want header file created: ")
+        self.makef = self.path / 'Makefile'
         src.mkdir()
-        obj.mkdir()
-        Path.touch(mfile)
-        if hfile:
-            hefile = src / (hfile + '.hpp')
-            sefile = src / (hfile + '.cpp')
-            Path.touch(hefile)
-            Path.touch(sefile)
-        with open(makef, 'w') as file:
-            file.writelines(""" # auto-gen makefile
-
-CC=clang++
-CFLAG=-Wall -std=c++14
-
-main: main.o
-    $(CC) $(CFLAG) -o $@ $^
-
-%.o: %.c
-    $(CC) $(CFLAG) -c $^ -o $@
-
-clean:
-    rm -f *.o main""")
+        inc.mkdir()
+        Path.touch(self.mfile)
+        if self.hfile:
+            self.hefile = inc / (self.hfile + '.hpp')
+            self.sefile = src / (self.hfile + '.cpp')
+            Path.touch(self.hefile)
+            Path.touch(self.sefile)
+        self.compiler = input("Enter compiler name(default g++): ")
+        if not self.compiler:
+            self.compiler = "g++"
+        LangCpp.__writeToFiles(self)
 
 
 class LangJava(SetProject):
