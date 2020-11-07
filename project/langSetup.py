@@ -282,7 +282,7 @@ class LangServlet(SetProject):
         super().__init__(name)
 
     def __writeToFiles(self):
-        with open("index.html", 'w') as file:
+        with open(self.path / "index.html", 'w') as file:
             file.writelines(f"""<!DOCTYPE html>
 <html>
     <head></head>
@@ -304,7 +304,7 @@ class LangServlet(SetProject):
 </web-app>""")
         for javafile in self.packageName.rglob("*.java"):
             with open(javafile, 'w') as file:
-                file.writelines(f"""package {self.packageName};
+                file.writelines(f"""package com.{self.packageName.stem};
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -442,5 +442,9 @@ class LangWebD(SetProject):
     </body>
 </html>""")
 
+
+if __name__ == "__main__":
+    print("Not a standalone script")
+    exit(1)
 
   #######################################################################
