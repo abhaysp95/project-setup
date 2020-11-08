@@ -58,7 +58,7 @@ DIRS      = ${{BIN_DIR}} ${{OBJ_DIR}} ${{DEBUG_DIR}}
 
 
 SRC       = $(wildcard ${{SRC_DIR}}/*.c)
-OBJ       = $(addprefix ${{OBJ_DIR}}/, $(notdir ${{SRC:.c  =.o}}))
+OBJ       = $(addprefix ${{OBJ_DIR}}/, $(notdir ${{SRC:.c=.o}}))
 BIN       = ${{BIN_DIR}}/$(notdir $(realpath .))
 DEBUG_OBJ = $(addprefix ${{DEBUG_DIR}}/, $(notdir ${{SRC:.c=.o}}))
 DEBUG_BIN = $(addprefix ${{DEBUG_DIR}}/, $(notdir $(realpath .)))
@@ -158,7 +158,7 @@ DIRS      = ${{BIN_DIR}} ${{OBJ_DIR}} ${{DEBUG_DIR}}
 
 
 SRC       = $(wildcard ${{SRC_DIR}}/*.cpp)
-OBJ       = $(addprefix ${{OBJ_DIR}}/, $(notdir ${{SRC:.cpp  =.o}}))
+OBJ       = $(addprefix ${{OBJ_DIR}}/, $(notdir ${{SRC:.cpp=.o}}))
 BIN       = ${{BIN_DIR}}/$(notdir $(realpath .))
 DEBUG_OBJ = $(addprefix ${{DEBUG_DIR}}/, $(notdir ${{SRC:.cpp=.o}}))
 DEBUG_BIN = $(addprefix ${{DEBUG_DIR}}/, $(notdir $(realpath .)))
