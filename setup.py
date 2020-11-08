@@ -6,7 +6,7 @@ def read(fname):
 
 setup(
     name='setproj',
-    version='0.0.2',
+    version='0.0.3',
     packages=find_packages('src'),
     description='create projects in cli',
     author='Abhay Shanker Pathak',
@@ -17,7 +17,7 @@ setup(
     url="https://github.com/coolabhays/project-setup",
     license="MIT",
     package_dir={'': 'src'},
-    py_modules=["setproj"],
+    py_modules=["setupProject"],
     install_requires=[
         'Click',
     ],
