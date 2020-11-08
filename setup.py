@@ -6,7 +6,7 @@ def read(fname):
 
 setup(
     name='setproj',
-    version='0.0.3',
+    version='0.0.4',
     description='create projects in cli',
     author='Abhay Shanker Pathak',
     author_email='abhaysp9955@gmail.com',
