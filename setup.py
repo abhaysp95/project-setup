@@ -24,7 +24,8 @@ setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Topic :: Utilites",
-        "Operating System :: Linux/Unix"
+        "Topic :: Terminals",
+        "Operating System :: POSIX"
     ],
     entry_points={
         'console_scripts': [
