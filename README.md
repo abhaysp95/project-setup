@@ -9,7 +9,7 @@ Let's see how it is done. Here's a project creation demo for `java` language:
 ![proj-creation-c](https://github.com/coolabhays/project-setup/blob/master/sshots/c-mkproj.png)
 
 
-![proj-creation-java](https://github.com/coolabhays/project-setup/blob/master/sshots/java-mkproj.png)
+![proj-creation-servlet](https://github.com/coolabhays/project-setup/blob/master/sshots/servlet-mkproj.png)
 
 <br>
 
