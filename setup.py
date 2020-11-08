@@ -30,7 +30,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'setproj=src.app:main',
+            'setproj=src.setproj:main',
         ],
     },
 )
