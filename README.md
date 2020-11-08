@@ -1,4 +1,4 @@
-# MKPROJ
+# SETPROJ
 
 Have project setup **instantly** on _cli_.
 
