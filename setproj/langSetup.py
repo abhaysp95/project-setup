@@ -101,12 +101,12 @@ clean:
         obj = self.path / 'obj'
         inc = self.path / 'inc'
         self.mfile = src / 'main.c'
-        self.hfile = input("Press enter if don't want header file created: ")
+        self.hefile = input("Press enter if don't want header file created: ")
         self.makef = self.path / 'Makefile'
         src.mkdir()
         inc.mkdir()
         Path.touch(self.mfile)
-        if self.hfile:
+        if self.hefile:
             self.hefile = inc / (self.hfile + '.h')
             self.sefile = src / (self.hfile + '.c')
             Path.touch(self.hefile)
