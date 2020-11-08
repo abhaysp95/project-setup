@@ -1,3 +1,0 @@
-[console_scripts]
-mkproj = project.app:main
-
