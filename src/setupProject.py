@@ -1,7 +1,13 @@
-import click
+# system modules
+
 from sys import exit
-from project import langSetup
 import subprocess
+
+# third-party module
+import click
+
+# project module
+from project import langSetup
 
 # TODO:
 # see that if click provides a way to only accept provided values for a argument(like argparse)
