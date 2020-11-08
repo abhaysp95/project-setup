@@ -68,8 +68,3 @@ def extraSetup(dirname, isgit):
         subprocess.run(["git", "init"], cwd=dirname)
         subprocess.run(["git", "add", "*"], cwd=dirname)
         subprocess.run(["git", "commit", "-m", "'initial commit'"], cwd=dirname)
-
-
-if __name__ == "__main__":
-    print("Not a stand-alone script")
-    exit(1)
