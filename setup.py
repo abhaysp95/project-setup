@@ -23,7 +23,7 @@ setup(
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
-        "Topic :: Utilites",
+        "Topic :: Utilities",
         "Topic :: Terminals",
         "Operating System :: POSIX"
     ],
