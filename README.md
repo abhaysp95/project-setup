@@ -8,6 +8,7 @@ Let's see how it is done. Here's a project creation demo for `java` language:
 
 ![proj-creation-c](https://github.com/coolabhays/project-setup/raw/master/sshots/c-mkproj.png)
 
+<hr>
 
 ![proj-creation-servlet](https://github.com/coolabhays/project-setup/raw/master/sshots/servlet-mkproj.png)
 
@@ -42,28 +43,39 @@ And here's the directory hierarchy for all the supported languages:
 
 ![C-dir-struct](https://github.com/coolabhays/project-setup/raw/master/sshots/structure-cproj.png)
 
+<hr>
+
 
 * **C++**:
 
 ![c++-dir-struct](https://github.com/coolabhays/project-setup/raw/master/sshots/structure-cppproj.png)
+
+<hr>
 
 
 * **Java**:
 
 ![java-dir-struct](https://github.com/coolabhays/project-setup/raw/master/sshots/structure-javaproj.png)
 
+<hr>
+
 * **Python**:
 
 ![python-dir-struct](https://github.com/coolabhays/project-setup/raw/master/sshots/structure-pyproj.png)
+
+<hr>
 
 * **Web Designing**:
 
 ![webd-dir-struct](https://github.com/coolabhays/project-setup/raw/master/sshots/structure-webdproj.png)
 
+<hr>
+
 * **Java Servlet**:
 
 ![servlet-dir-struct](https://github.com/coolabhays/project-setup/raw/master/sshots/structure-servlet.png)
 
+<br>
 ```
 Note: This project is still in development stage
 ```
