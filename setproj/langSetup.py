@@ -33,10 +33,14 @@ int main(int argc, char **argv) {{
     /* code here */
     return 0;
 }}""")
-        with open(self.hefile, 'w') as file:
-            file.write("#pragma once")
-        with open(self.sefile, 'w') as file:
-            file.write(f"#include \"../inc/{self.hefile.stem}.h\"")
+
+        try:
+            with open(self.hefile, 'w') as file:
+                file.write("#pragma once")
+            with open(self.sefile, 'w') as file:
+                file.write(f"#include \"../inc/{self.hefile.stem}.h\"")
+        except AttributeError:
+            pass
         with open(self.makef, 'w') as file:
             file.writelines(f"""# /* --- Makefile --- */
 
@@ -99,12 +103,12 @@ clean:
         obj = self.path / 'obj'
         inc = self.path / 'inc'
         self.mfile = src / 'main.c'
-        self.hefile = input("Press enter if don't want header file created: ")
+        self.hfile = input("Press enter if don't want header file created: ")
         self.makef = self.path / 'Makefile'
         src.mkdir()
-        inc.mkdir()
         Path.touch(self.mfile)
-        if self.hefile:
+        if self.hfile:
+            inc.mkdir()
             self.hefile = inc / (self.hfile + '.h')
             self.sefile = src / (self.hfile + '.c')
             Path.touch(self.hefile)
@@ -133,10 +137,14 @@ int main(int argc, char **argv) {{
     /* code here */
     return 0;
 }}""")
-        with open(self.hefile, 'w') as file:
-            file.write("#pragma once")
-        with open(self.sefile, 'w') as file:
-            file.write(f"#include \"../inc/{self.hefile.stem}.hpp\"")
+
+        try:
+            with open(self.hefile, 'w') as file:
+                file.write("#pragma once")
+            with open(self.sefile, 'w') as file:
+                file.write(f"#include \"../inc/{self.hefile.stem}.hpp\"")
+        except AttributeError:
+            pass
         with open(self.makef, 'w') as file:
             file.writelines(f"""# /* --- Makefile --- */
 
@@ -202,9 +210,9 @@ clean:
         self.hfile = input("Press enter if don't want header file created: ")
         self.makef = self.path / 'Makefile'
         src.mkdir()
-        inc.mkdir()
         Path.touch(self.mfile)
         if self.hfile:
+            inc.mkdir()
             self.hefile = inc / (self.hfile + '.hpp')
             self.sefile = src / (self.hfile + '.cpp')
             Path.touch(self.hefile)
