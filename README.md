@@ -6,10 +6,10 @@ As programmer and terminal(and terminal tools) lover, I wanted something which w
 
 Let's see how it is done. Here's a project creation demo for `java` language:
 
-![proj-creation-c](https://github.com/coolabhays/project-setup/blob/master/sshots/c-mkproj.png)
+![proj-creation-c](https://github.com/coolabhays/project-setup/raw/master/sshots/c-mkproj.png)
 
 
-![proj-creation-servlet](https://github.com/coolabhays/project-setup/blob/master/sshots/servlet-mkproj.png)
+![proj-creation-servlet](https://github.com/coolabhays/project-setup/raw/master/sshots/servlet-mkproj.png)
 
 <br>
 
@@ -33,36 +33,36 @@ It's an interactive project which puts all the necessary files/folders in place 
 
 Here's an example of fillup for `Java-Servlet`:
 
-![java-servlet-fillup](https://github.com/coolabhays/project-setup/blob/master/sshots/servlet-fillup.png)
+![java-servlet-fillup](https://github.com/coolabhays/project-setup/raw/master/sshots/servlet-fillup.png)
 
 
 And here's the directory hierarchy for all the supported languages:
 
 * **C**:
 
-![C-dir-struct](https://github.com/coolabhays/project-setup/blob/master/sshots/structure-cproj.png)
+![C-dir-struct](https://github.com/coolabhays/project-setup/raw/master/sshots/structure-cproj.png)
 
 
 * **C++**:
 
-![c++-dir-struct](https://github.com/coolabhays/project-setup/blob/master/sshots/structure-cppproj.png)
+![c++-dir-struct](https://github.com/coolabhays/project-setup/raw/master/sshots/structure-cppproj.png)
 
 
 * **Java**:
 
-![java-dir-struct](https://github.com/coolabhays/project-setup/blob/master/sshots/structure-javaproj.png)
+![java-dir-struct](https://github.com/coolabhays/project-setup/raw/master/sshots/structure-javaproj.png)
 
 * **Python**:
 
-![python-dir-struct](https://github.com/coolabhays/project-setup/blob/master/sshots/structure-pyproj.png)
+![python-dir-struct](https://github.com/coolabhays/project-setup/raw/master/sshots/structure-pyproj.png)
 
 * **Web Designing**:
 
-![webd-dir-struct](https://github.com/coolabhays/project-setup/blob/master/sshots/structure-webdproj.png)
+![webd-dir-struct](https://github.com/coolabhays/project-setup/raw/master/sshots/structure-webdproj.png)
 
 * **Java Servlet**:
 
-![servlet-dir-struct](https://github.com/coolabhays/project-setup/blob/master/sshots/structure-servlet.png)
+![servlet-dir-struct](https://github.com/coolabhays/project-setup/raw/master/sshots/structure-servlet.png)
 
 ```
 Note: This project is still in development stage
