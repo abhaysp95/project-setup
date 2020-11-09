@@ -2,6 +2,7 @@
 
 from sys import exit
 import subprocess
+from pathlib import Path
 
 # third-party module
 import click
@@ -33,6 +34,8 @@ def main(language, name, gitit):
     For 'C++' will be 'g++'
     '''
 
+    ifProjectExists(name)
+
     if language.lower() == 'c':
         print("project setup for C language, named: {}".format(name))
         langs = langSetup.LangC(name)
@@ -61,6 +64,19 @@ def main(language, name, gitit):
         print("Language not supported or not correct language name")
         exit(2)
     extraSetup(name, gitit)
+
+
+def ifProjectExists(projectPath):
+    """ check if project user is trying to create already exists """
+    projectPath = Path.cwd() / projectPath
+    if Path.is_dir(projectPath):
+        print("Project already exists in current directory")
+        createAgain = input("Do you want to create another project with another name[y/n]? ")
+        if createAgain == 'y':
+            main()
+        else:
+            print("Exiting !!!")
+            exit(1)
 
 
 def extraSetup(dirname, isgit):
