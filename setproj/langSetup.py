@@ -5,8 +5,6 @@ import subprocess
 
 # TODO:
 # see, if you can activate virtualenv
-# if dir with project dir already exists ask if want to
-#   recreate, append(maybe a file) or not create at all
 
 class SetProject:
     """ General Project setup class """
