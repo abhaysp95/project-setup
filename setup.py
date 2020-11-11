@@ -4,9 +4,20 @@ from os import path
 def read(fname):
     return open(path.join(path.dirname(__file__), fname)).read()
 
+__version = "1.0.2"
+
+try:
+    with open("setproj/__version__.py") as vfile:
+        for line in vfile.readlines():
+            if line.startswith("__version__"):
+                _, _, version = line.replace('"', ' ').split()
+            break
+except EnvironmentError:
+    pass
+
 setup(
     name='setproj',
-    version='1.0.1',
+    version=__version,
     description='create projects in cli',
     author='Abhay Shanker Pathak',
     author_email='abhaysp9955@gmail.com',

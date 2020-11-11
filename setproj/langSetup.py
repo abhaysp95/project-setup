@@ -185,6 +185,8 @@ ${{OBJ_DIR}}/%.o: ${{SRC_DIR}}/%.cpp
 ${{BIN}}: ${{OBJ}}
 \t-@echo "Linking $? -> $@"
 \t${{LD}} ${{LFLAG}} -o $@ ${{OBJ_DIR}}/*.o
+\t-@echo "copied ${{BIN}} -> $(notdir $(realpath .))"
+\tcp -f ${{BIN}} .
 
 
 debug: dir ${{DEBUG_BIN}}
