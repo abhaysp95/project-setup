@@ -10,6 +10,7 @@ import click
 # project module
 import setproj
 from setproj import langSetup
+from setproj import __version__
 
 # TODO:
 # see that if click provides a way to only accept provided values for a argument(like argparse)
@@ -17,10 +18,9 @@ from setproj import langSetup
 # see, if you can have globbing with filenames like for java, java8 or java11 both should be accepted and checked
 
 @click.command()
-@click.option('--language', '-l', prompt='Input Language', help='Enter the programming language to setup project for')
-@click.option('--name', '-n', prompt='Input Project Name', help='Provide the name of project')
 @click.option('--gitit', '-g', is_flag=True, help='Want git setup?')
-def main(language, name, gitit):
+@click.option('--version', '-v', is_flag=True, help='gives version')
+def main(gitit, version):
     '''Project Setup Helper:
 
     Current Language Support:
@@ -34,36 +34,53 @@ def main(language, name, gitit):
     For 'C++' will be 'g++'
     '''
 
-    ifProjectExists(name)
-
-    if language.lower() == 'c':
-        print("project setup for C language, named: {}".format(name))
-        langs = langSetup.LangC(name)
-        langs.setup()
-    elif language.lower() in ["cpp", "c++"]:
-        print("project setup for C++ language, named: {}".format(name))
-        langs = langSetup.LangCpp(name)
-        langs.setup()
-    elif language.lower() == "java":
-        print("project setup for Java language, named: {}".format(name))
-        langs = langSetup.LangJava(name)
-        langs.setup()
-    elif language.lower() == "python":
-        print("project setup for Python language, named: {}".format(name))
-        langs = langSetup.LangPython(name)
-        langs.setup()
-    elif language.lower() == "webd":
-        print("project setup for Web Designing, named: {}".format(name))
-        langs = langSetup.LangWebD(name)
-        langs.setup()
-    elif language.lower() in ["servlet", "java-servlet", "servlet-java"]:
-        print("project setup for Java Servlet, named: {}".format(name))
-        langs = langSetup.LangServlet(name)
-        langs.setup()
+    if version:
+        giveVersion()
+        exit(0)
     else:
-        print("Language not supported or not correct language name")
-        exit(2)
-    extraSetup(name, gitit)
+        projectSetup(gitit)
+
+
+def projectSetup(gitit):
+    # take important entries
+    name = input("Input project name[leave blank to cancel]: ")
+    # if both entries entered by user
+    if name:
+        language = input("Input Language[leave blank to cancel]: ")
+        if language:
+            # check if project already exist
+            ifProjectExists(name)
+            if language.lower() == 'c':
+                print("project setup for C language, named: {}".format(name))
+                langs = langSetup.LangC(name)
+                langs.setup()
+            elif language.lower() in ["cpp", "c++"]:
+                print("project setup for C++ language, named: {}".format(name))
+                langs = langSetup.LangCpp(name)
+                langs.setup()
+            elif language.lower() == "java":
+                print("project setup for Java language, named: {}".format(name))
+                langs = langSetup.LangJava(name)
+                langs.setup()
+            elif language.lower() == "python":
+                print("project setup for Python language, named: {}".format(name))
+                langs = langSetup.LangPython(name)
+                langs.setup()
+            elif language.lower() == "webd":
+                print("project setup for Web Designing, named: {}".format(name))
+                langs = langSetup.LangWebD(name)
+                langs.setup()
+            elif language.lower() in ["servlet", "java-servlet", "servlet-java"]:
+                print("project setup for Java Servlet, named: {}".format(name))
+                langs = langSetup.LangServlet(name)
+                langs.setup()
+            else:
+                print("Language not supported or not correct language name")
+                exit(2)
+            extraSetup(name, gitit)
+    else:
+        print("Exiting !!!")
+        exit(1)
 
 
 def ifProjectExists(projectPath):
@@ -85,6 +102,17 @@ def extraSetup(dirname, isgit):
         subprocess.run(["git", "init"], cwd=dirname)
         subprocess.run(["git", "add", "*"], cwd=dirname)
         subprocess.run(["git", "commit", "-m", "'initial commit'"], cwd=dirname)
+
+
+def giveVersion():
+    __version = "not provided"
+    try:
+        __version = __version__.returnVersion()
+    except (NameError, ValueError):
+        pass
+    finally:
+        print(f"""setproj (SETPROJ), version: {__version}
+This is a free software; licensed under "MIT License" """)
 
 
 if __name__ == "__main__":
