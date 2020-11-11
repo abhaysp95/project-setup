@@ -48,7 +48,7 @@ CC     = {self.compiler}
 CFLAG  = -Wall -std=c99
 CDFLAG = -Wall -std=c99 -g
 LD     = {self.compiler}
-LFLAG  =
+LFLAG  = -v
 
 
 SRC_DIR   = src
@@ -79,6 +79,8 @@ ${{OBJ_DIR}}/%.o: ${{SRC_DIR}}/%.c
 ${{BIN}}: ${{OBJ}}
 \t-@echo "Linking $? -> $@"
 \t${{LD}} ${{LFLAG}} -o $@ ${{OBJ_DIR}}/*.o
+\t-@echo "copied ${{BIN}} -> $(notdir $(realpath .))"
+\tcp -f ${{BIN}} .
 
 
 debug: dir ${{DEBUG_BIN}}
@@ -93,7 +95,7 @@ ${{DEBUG_BIN}}: ${{DEBUG_OBJ}}
 
 
 clean:
-\trm -rf ${{DIRS}}
+\trm -rf ${{DIRS}} $(notdir $(realpath .))
 
 .SILENT:
 .PHONY: all dir debug clean""")
@@ -113,9 +115,9 @@ clean:
             self.sefile = src / (self.hfile + '.c')
             Path.touch(self.hefile)
             Path.touch(self.sefile)
-        self.compiler = input("Select compiler[defualt to cc(in linux cc = gcc)]: ")
+        self.compiler = input("Select compiler[defualt to clang]: ")
         if not self.compiler:
-            self.compiler = "cc"
+            self.compiler = "clang"
         LangC.__writeToFiles(self)
 
 
@@ -152,7 +154,7 @@ CC     = {self.compiler}
 CFLAG  = -Wall -std=c++14
 CDFLAG = -Wall -std=c++14 -g
 LD     = {self.compiler}
-LFLAG  =
+LFLAG  = -v
 
 
 SRC_DIR   = src
@@ -217,9 +219,9 @@ clean:
             self.sefile = src / (self.hfile + '.cpp')
             Path.touch(self.hefile)
             Path.touch(self.sefile)
-        self.compiler = input("Enter compiler name(default g++): ")
+        self.compiler = input("Enter compiler[defualt is clang++]: ")
         if not self.compiler:
-            self.compiler = "g++"
+            self.compiler = "clang++"
         LangCpp.__writeToFiles(self)
 
 
