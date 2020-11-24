@@ -30,8 +30,8 @@ class LangC(SetProject):
 #include <stdio.h>
 
 int main(int argc, char **argv) {{
-    /* code here */
-    return 0;
+\t/* code here */
+\treturn 0;
 }}""")
 
         try:
@@ -136,8 +136,8 @@ class LangCpp(SetProject):
 #include <iostream>
 
 int main(int argc, char **argv) {{
-    /* code here */
-    return 0;
+\t/* code here */
+\treturn 0;
 }}""")
 
         try:
@@ -240,9 +240,9 @@ class LangJava(SetProject):
                     file.writelines(f"""package com.{self.packageName.stem};
 
 public class {gotFile.stem} {{
-    public static void main(String ...args) {{
-        /** code */
-    }}
+\tpublic static void main(String ...args) {{
+\t\t/** code */
+\t}}
 }}""")
                 else:
                     file.writelines(f"""package com.{self.packageName.stem};
@@ -295,22 +295,22 @@ class LangServlet(SetProject):
         with open(self.path / "index.html", 'w') as file:
             file.writelines(f"""<!DOCTYPE html>
 <html>
-    <head></head>
-    <body>
-        <form action="" method="get">
-        </form>
-    </body>
+\t<head></head>
+\t<body>
+\t\t<form action="" method="get">
+\t\t</form>
+\t</body>
 </html>""")
         with open(self.path / 'WEB-INF' / 'web.xml', 'w') as file:
             file.writelines(f"""<web-app>
-    <servlet>
-        <servlet-name></servlet-name>
-        <servlet-class></servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name></servlet-name>
-        <url-pattern></url-pattern>
-    </servlet-mapping>
+\t<servlet>
+\t\t<servlet-name></servlet-name>
+\t\t<servlet-class></servlet-class>
+\t</servlet>
+\t<servlet-mapping>
+\t\t<servlet-name></servlet-name>
+\t\t<url-pattern></url-pattern>
+\t</servlet-mapping>
 </web-app>""")
         for javafile in self.packageName.rglob("*.java"):
             with open(javafile, 'w') as file:
@@ -324,9 +324,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 
 public class {javafile.stem.title()} extends HttpServlet {{
-	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {{
-        /** code */
-    }}
+\tpublic void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {{
+\t\t/** code */
+\t}}
 }}""")
 
 
@@ -441,15 +441,15 @@ class LangWebD(SetProject):
         with open(index, 'w') as file:
             file.writelines(f"""<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <link type="text/css" rel="stylesheet" href="style.css">
+\t<head>
+\t\t<meta charset="UTF-8">
+\t\t<link type="text/css" rel="stylesheet" href="style.css">
 
-        <title>Pig Game</title>
-    </head>
-    <body>
-        <script src="app.js"></script>
-    </body>
+\t\t<title>Enter title here</title>
+\t</head>
+\t<body>
+\t\t<script src="app.js"></script>
+\t</body>
 </html>""")
 
 
