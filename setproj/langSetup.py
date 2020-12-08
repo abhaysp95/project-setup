@@ -237,7 +237,7 @@ class LangJava(SetProject):
         self.dsrc = self.path / 'src'
         self.dbin = self.path / 'bin'
         self.packageName = None
-        self.dir = None
+        self.packageDir = None
 
     def __writeToFiles(self):
         for gotFile in self.dsrc.rglob("*.java"):
