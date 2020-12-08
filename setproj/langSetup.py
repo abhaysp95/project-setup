@@ -5,6 +5,8 @@ import subprocess
 
 # TODO:
 # see, if you can activate virtualenv
+# for JavaFX, check if the distro have rsync installed if not install it
+# (requires for update_files.sh) and 'entr' too
 
 class SetProject:
     """ General Project setup class """
