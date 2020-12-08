@@ -74,6 +74,10 @@ def projectSetup(gitit):
                 print("project setup for Java Servlet, named: {}".format(name))
                 langs = langSetup.LangServlet(name)
                 langs.setup()
+            elif language.lower() in ["javafx", "JavaFX", "JavaFx"]:
+                print("project setup for JavaFX, named: {}".format(name))
+                langs = langSetup.LangJavaFx(name)
+                langs.setup()
             else:
                 print("Language not supported or not correct language name")
                 exit(2)
