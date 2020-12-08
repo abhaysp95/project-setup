@@ -232,12 +232,16 @@ class LangJava(SetProject):
 
     def __init__(self, name='new-project'):
         super().__init__(name)
+        self.dsrc = self.path / 'src'
+        self.dbin = self.path / 'bin'
+        self.packageName = None
+        self.dir = None
 
     def __writeToFiles(self):
         for gotFile in self.dsrc.rglob("*.java"):
             with open(gotFile, 'w') as file:
                 if gotFile.stem == "Main":
-                    file.writelines(f"""package com.{self.packageName.stem};
+                    file.writelines(f"""package com.{self.packageName};
 
 public class {gotFile.stem} {{
 \tpublic static void main(String ...args) {{
@@ -245,7 +249,7 @@ public class {gotFile.stem} {{
 \t}}
 }}""")
                 else:
-                    file.writelines(f"""package com.{self.packageName.stem};
+                    file.writelines(f"""package com.{self.packageName};
 
 class {gotFile.stem} {{
         /** code */
@@ -256,9 +260,11 @@ class {gotFile.stem} {{
         self.dbin = self.path / 'bin'
         self.packageName = input("Package Name [if not provided, default will be hostname]: ")
         if not self.packageName:
-            self.packageName = self.dsrc / ('com') / uname()[1]
+            packageDir = self.dsrc / ('com') / uname()[1]
         else:
-            self.packageName = self.dsrc / ('com') / self.packageName
+            packageDir = self.dsrc / ('com') / self.packageName
+        print("packageName: " + str(packageDir))
+        print(type(packageDir))
         className = list()
         try:
             count = int(input('Number of class files(except Main.java): '))
@@ -266,17 +272,21 @@ class {gotFile.stem} {{
             print("Enter correct values: " + ve)
         else:
             for x in range(count):
-                className.append((input(str(x + 1) + ": ")).title())
+                gotClassName = input(str(x + 1) + ": ")
+                if gotClassName.islower():
+                    className.append(gotClassName.title())
+                else:
+                    className.append(gotClassName)
             choice = input("Separate Main.java? [y/n]: ")
             if choice == 'y':
                 className.append('Main')
             if len(className) > 0:
                 self.dbin.mkdir()
-                self.packageName.mkdir(parents=True)
+                packageDir.mkdir(parents=True)
                 for classfile in className:
-                    Path.touch(self.packageName / (classfile + ".java"))
+                    Path.touch(packageDir / (classfile + ".java"))
                 if choice == 'y':
-                    Path.touch(self.packageName / 'Main.java')
+                    Path.touch(packageDir / 'Main.java')
                 LangJava.__writeToFiles(self)
             else:
                 print("Error: There must atleast on class file")
