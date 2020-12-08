@@ -251,10 +251,10 @@ public class {gotFile.stem} {{
 \t}}
 }}""")
                 else:
-                    file.writelines(f"""package com.{self.packageName};
+                    file.writelines(f"""package com.{self.packageName.replace('/', '.')};
 
 class {gotFile.stem} {{
-        /** code */
+\t\t/** code */
 }}""")
 
     def setup(self):
@@ -262,11 +262,9 @@ class {gotFile.stem} {{
         self.dbin = self.path / 'bin'
         self.packageName = input("Package Name [if not provided, default will be hostname]: ")
         if not self.packageName:
-            packageDir = self.dsrc / ('com') / uname()[1]
+            self.packageDir = self.dsrc / ('com') / uname()[1]
         else:
-            packageDir = self.dsrc / ('com') / self.packageName
-        print("packageName: " + str(packageDir))
-        print(type(packageDir))
+            self.packageDir = self.dsrc / ('com') / self.packageName
         className = list()
         try:
             count = int(input('Number of class files(except Main.java): '))
@@ -284,11 +282,11 @@ class {gotFile.stem} {{
                 className.append('Main')
             if len(className) > 0:
                 self.dbin.mkdir()
-                packageDir.mkdir(parents=True)
+                self.packageDir.mkdir(parents=True)
                 for classfile in className:
-                    Path.touch(packageDir / (classfile + ".java"))
+                    Path.touch(self.packageDir / (classfile + ".java"))
                 if choice == 'y':
-                    Path.touch(packageDir / 'Main.java')
+                    Path.touch(self.packageDir / 'Main.java')
                 LangJava.__writeToFiles(self)
             else:
                 print("Error: There must atleast on class file")
