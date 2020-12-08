@@ -295,6 +295,112 @@ class {gotFile.stem} {{
                 exit(2)
 
 
+class LangJavaFx(LangJava):
+    """further project setup for JavaFx(suitable for terminal development)"""
+
+    def __init__(self, name="new_project"):
+        super().__init__(name)
+        self.fxmlFile = None
+        self.cssFile = None
+        self.scenebuilderPos = "/opt/SceneBuilder/app"
+        self.updateScript = self.dsrc / "update_files.sh"
+
+    def __writeToFiles(self):
+        for gotFile in self.dsrc.rglob("*.java"):
+            with open(gotFile, "w") as file:
+                if gotFile.stem == "Main":
+                    if not self.fxmlFile:
+                        file.writelines(f"""package com.{self.packageName.replace('/', '.')}
+
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+
+public class {gotFile.stem} extends Application {{
+
+\t@Override
+\tpublic void start(Stage primaryStage) throws Exception {{
+\t\tGridPane root = new GridPane();
+\t\tprimaryStage.setTitle("{self.projName}");
+\t\tprimaryStage.setScene(new Scene(root, "400", "400"));
+\t\tprimaryStage.show();
+\t}}
+\tpublic static void main(String ...args) {{
+\t\tlaunch(args);
+\t}}
+}}""")
+                    else:
+                        file.writelines(f"""package com.{self.packageName.replace('/', '.')}
+
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.Parent;
+import javafx.fxml.FXMLLoader;
+
+public class {gotFile.stem} extends Application {{
+
+\t@Override
+\tpublic void start(Stage primaryStage) throws Exception {{
+\t\tParent root = new FXMLLoader(getClass().getResource("/com/{self.packageName}/{self.fxmlFile}"));
+\t\tprimaryStage.setTitle("{self.projName}");
+\t\tprimaryStage.setScene(new Scene(root, "400", "400"));
+\t\tprimaryStage.show();
+\t}}
+\tpublic static void main(String ...args) {{
+\t\tlaunch(args);
+\t}}
+}}""")
+                # going to be Controller or some other java files
+                else:
+                    file.writelines(f"""package com/{self.packageName.replace('/', '.')}
+
+public class {gotFile.stem} {{
+\t/** code here */
+}}""")
+        # basic setup for fxml files
+        for gotFile in self.dsrc.rglob("*.fxml"):
+            with open(gotFile, 'w') as file:
+                file.writelines("""<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+<GridPane fx:controller="" xmlns:fx="http://javafx.com/fxml">
+\t<!-- code here -->
+</GridPane>""")
+        # basic setup for css files
+        for gotFile in self.dsrc.rglob("*.css"):
+            with open(gotFile, 'w') as file:
+                file.writeline("/* provide styling here */")
+        if self.scenebuilderPos:
+            if Path(self.scenebuilderPos).is_dir():
+                with open(Path(self.scenebuilderPos + '/' + self.fxmlFile), 'w') as file:
+                    file.writelines("""<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+<GridPane fx:controller="" xmlns:fx="http://javafx.com/fxml">
+\t<!-- code here -->
+</GridPane>""")
+
+# start writing update_files.sh from here
+
+
+    def doFurtherSetup(self):
+        self.fxmlFile = input("Enter the fxml file name[if not, leave blank]: ")
+        self.cssFile = input("Enter the css file name[if not, leave blank]:")
+        print("Enter scenebuilder position")
+        self.scenebuilderPos = input("[default: \"/opt/SceneBuilder/app\" | if not, leave blank]: ")
+        if self.fxmlFile:
+            Path.touch(self.packageDir / (self.fxmlFile + ".fxml"))
+        if self.cssFile:
+            Path.touch(self.packageDir / (self.cssFile + ".css"))
+        if self.scenebuilderPos:
+            if Path(self.scenebuilderPos).is_dir():
+                Path.touch(Path(self.scenebuilderPos / (self.fxmlFile + ".fxml")))
+        Path.touch(self.updateScript)
+
+
+
 class LangServlet(SetProject):
     """ further project setup for Java Servlet languages """
 
