@@ -10,7 +10,7 @@ try:
     with open("setproj/__version__.py") as vfile:
         for line in vfile.readlines():
             if line.startswith("__version__"):
-                _, _, version = line.replace('"', ' ').split()
+                _, _, __version = line.replace('"', ' ').split()
             break
 except EnvironmentError:
     pass
