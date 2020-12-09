@@ -26,8 +26,8 @@ class LangC(SetProject):
         self.mfile = None
         self.hfile = None
         self.makef = None
-        self.sefile = None
-        self.hefile = None
+        self.sefile = ''
+        self.hefile = ''
         self.compiler = None
 
     def __writeToFiles(self):
@@ -48,6 +48,8 @@ int main(int argc, char **argv) {{
             with open(self.sefile, 'w') as file:
                 file.write(f"#include \"../inc/{self.hefile.stem}.h\"")
         except AttributeError:
+            pass
+        except FileNotFoundError:
             pass
         with open(self.makef, 'w') as file:
             file.writelines(f"""# /* --- Makefile --- */
@@ -138,8 +140,8 @@ class LangCpp(SetProject):
         self.mfile = None
         self.hfile = None
         self.makef = None
-        self.sefile = None
-        self.hefile = None
+        self.sefile = ''
+        self.hefile = ''
         self.compiler = None
 
     def __writeToFiles(self):
@@ -160,6 +162,8 @@ int main(int argc, char **argv) {{
             with open(self.sefile, 'w') as file:
                 file.write(f"#include \"../inc/{self.hefile.stem}.hpp\"")
         except AttributeError:
+            pass
+        except FileNotFoundError:
             pass
         with open(self.makef, 'w') as file:
             file.writelines(f"""# /* --- Makefile --- */
