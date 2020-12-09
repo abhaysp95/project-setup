@@ -78,6 +78,7 @@ def projectSetup(gitit):
                 print("project setup for JavaFX, named: {}".format(name))
                 langs = langSetup.LangJavaFx(name)
                 langs.setup()
+                langs.doFurtherSetup()
             else:
                 print("Language not supported or not correct language name")
                 exit(2)
