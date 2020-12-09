@@ -39,7 +39,7 @@ Here's an example of fillup for `Java-Servlet` and `JavaFX`:
 
 <hr>
 
-![javafx-fillup](sshots/javafx-fillup.png)
+![javafx-fillup](https://github.com/coolabhays/project-setup/blob/master/sshots/javafx-fillup.png)
 
 And here's the directory hierarchy for all the supported languages:
 
@@ -71,7 +71,7 @@ And here's the directory hierarchy for all the supported languages:
 
 * **JavaFX**:
 
-![javafx-dir-struct](sshots/structure-javafx.png)
+![javafx-dir-struct](https://github.com/coolabhays/project-setup/blob/master/sshots/structure-javafx.png)
 
 <hr>
 
