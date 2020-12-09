@@ -400,7 +400,7 @@ rsync -a {self.dsrc}/{self.packageName}/{Path(self.fxmlFile).stem}.fxml {self.db
 
     def doFurtherSetup(self):
         self.fxmlFile = input("Enter the fxml file name[if not, leave blank]: ")
-        self.cssFile = input("Enter the css file name[if not, leave blank]:")
+        self.cssFile = input("Enter the css file name[if not, leave blank]: ")
         print("Enter scenebuilder position")
         enteredSceneBuilderPos = input("[default: \"/opt/SceneBuilder/app\" | if not, leave blank]: ")
         if enteredSceneBuilderPos:
