@@ -243,7 +243,7 @@ class LangJava(SetProject):
         for gotFile in self.dsrc.rglob("*.java"):
             with open(gotFile, 'w') as file:
                 if gotFile.stem == "Main":
-                    file.writelines(f"""package com.{self.packageName};
+                    file.writelines(f"""package com.{self.packageName.replace('/', '.')};
 
 public class {gotFile.stem} {{
 \tpublic static void main(String ...args) {{
@@ -354,7 +354,7 @@ public class {gotFile.stem} extends Application {{
 }}""")
                 # going to be Controller or some other java files
                 else:
-                    file.writelines(f"""package com/{self.packageName.replace('/', '.')}
+                    file.writelines(f"""package com.{self.packageName.replace('/', '.')}
 
 public class {gotFile.stem} {{
 \t/** code here */
