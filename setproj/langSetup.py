@@ -23,6 +23,12 @@ class LangC(SetProject):
 
     def __init__(self, name='new-project'):
         super().__init__(name)
+        self.mfile = None
+        self.hfile = None
+        self.makef = None
+        self.sefile = None
+        self.hefile = None
+        self.compiler = None
 
     def __writeToFiles(self):
         """write some initial data to files"""
@@ -129,6 +135,12 @@ class LangCpp(SetProject):
 
     def __init__(self, name='new-project'):
         super().__init__(name)
+        self.mfile = None
+        self.hfile = None
+        self.makef = None
+        self.sefile = None
+        self.hefile = None
+        self.compiler = None
 
     def __writeToFiles(self):
         """write some initial data to files"""
@@ -417,6 +429,7 @@ class LangServlet(SetProject):
 
     def __init__(self, name='new-project'):
         super().__init__(name)
+        self.packageName = None
 
     def __writeToFiles(self):
         with open(self.path / "index.html", 'w') as file:
@@ -505,6 +518,7 @@ class LangPython(SetProject):
 
     def __init__(self, name='new-project'):
         super().__init__(name)
+        self.path = None
 
     def setup(self):
         choiceVenv = input("Want virtualenv setup for python? [y/n]: ")
