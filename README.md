@@ -12,6 +12,10 @@ Let's see how it is done. Here's a project creation demo for `java` language:
 
 ![proj-creation-servlet](https://github.com/coolabhays/project-setup/raw/master/sshots/servlet-mkproj.png)
 
+<hr>
+
+![proj-creation-javafx](https://github.com/coolabhays/project-setup/blob/master/sshots/javafx-mkproj.png)
+
 <br>
 
 ### Supported Languages/Tools:
