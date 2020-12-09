@@ -371,7 +371,7 @@ public class {gotFile.stem} {{
         # basic setup for css files
         for gotFile in self.dsrc.rglob("*.css"):
             with open(gotFile, 'w') as file:
-                file.writeline("/* provide styling here */")
+                file.write("/* provide styling here */")
         if self.scenebuilderPos:
             if Path(self.scenebuilderPos).is_dir():
                 with open(Path(self.scenebuilderPos + '/' + self.fxmlFile), 'w') as file:
@@ -384,17 +384,17 @@ public class {gotFile.stem} {{
         with open(Path(self.updateScript), 'w') as file:
             file.writelines(f"""#!/usr/bin/env bash
 
-# file: {self.fxmlFile.stem}.fxml
+# file: {Path(self.fxmlFile).stem}.fxml
 # source: {self.scenebuilderPos}
 # desitination: src and bin(module)
-rsync -av {self.scenebuilderPos}/{self.fxmlFile.stem}.fxml {self.dsrc}/com/{self.packageName}
-rsync -av {self.scenebuilderPos}/{self.fxmlFile.stem}.fxml {self.dbin}/com.{self.packageName.replace('/', '.')}/com/{self.packageName}
+rsync -av {self.scenebuilderPos}/{Path(self.fxmlFile).stem}.fxml {self.dsrc}/com/{self.packageName}
+rsync -av {self.scenebuilderPos}/{Path(self.fxmlFile).stem}.fxml {self.dbin}/com.{self.packageName.replace('/', '.')}/com/{self.packageName}
 
-# file: {self.fxmlFile.stem}.fxml
+# file: {Path(self.fxmlFile).stem}.fxml
 # source: src
 # desitnation: scenebuilder pos. and bin(module)
-rsync -a {self.dsrc}/{self.packageName}/{self.fxmlFile.stem}.fxml {self.scenebuilderPos}
-rsync -a {self.dsrc}/{self.packageName}/{self.fxmlFile.stem}.fxml {self.dbin}/com.{self.packageName.replace('/', '.')}/com/{self.packageName}
+rsync -a {self.dsrc}/{self.packageName}/{Path(self.fxmlFile).stem}.fxml {self.scenebuilderPos}
+rsync -a {self.dsrc}/{self.packageName}/{Path(self.fxmlFile).stem}.fxml {self.dbin}/com.{self.packageName.replace('/', '.')}/com/{self.packageName}
 
 # provide further sync details here""")
 
@@ -402,14 +402,15 @@ rsync -a {self.dsrc}/{self.packageName}/{self.fxmlFile.stem}.fxml {self.dbin}/co
         self.fxmlFile = input("Enter the fxml file name[if not, leave blank]: ")
         self.cssFile = input("Enter the css file name[if not, leave blank]:")
         print("Enter scenebuilder position")
-        self.scenebuilderPos = input("[default: \"/opt/SceneBuilder/app\" | if not, leave blank]: ")
+        enteredSceneBuilderPos = input("[default: \"/opt/SceneBuilder/app\" | if not, leave blank]: ")
+        if enteredSceneBuilderPos:
+            self.scenebuilderPos = enteredSceneBuilderPos
         if self.fxmlFile:
             Path.touch(self.packageDir / (self.fxmlFile + ".fxml"))
         if self.cssFile:
             Path.touch(self.packageDir / (self.cssFile + ".css"))
-        (self.dbin / self.packageName.replace('/', '.')).mkdir()  # create module
-
-
+        (self.dbin / ('com.' + self.packageName.replace('/', '.'))).mkdir()  # create module
+        LangJavaFx.__writeToFiles(self)
 
 class LangServlet(SetProject):
     """ further project setup for Java Servlet languages """
