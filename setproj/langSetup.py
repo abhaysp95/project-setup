@@ -381,9 +381,22 @@ public class {gotFile.stem} {{
 <GridPane fx:controller="" xmlns:fx="http://javafx.com/fxml">
 \t<!-- code here -->
 </GridPane>""")
+        with open(Path(self.updateScript), 'w') as file:
+            file.writelines(f"""#!/usr/bin/env bash
 
-# start writing update_files.sh from here
+# file: {self.fxmlFile.stem}.fxml
+# source: {self.scenebuilderPos}
+# desitination: src and bin(module)
+rsync -av {self.scenebuilderPos}/{self.fxmlFile.stem}.fxml {self.dsrc}/com/{self.packageName}
+rsync -av {self.scenebuilderPos}/{self.fxmlFile.stem}.fxml {self.dbin}/com.{self.packageName.replace('/', '.')}/com/{self.packageName}
 
+# file: {self.fxmlFile.stem}.fxml
+# source: src
+# desitnation: scenebuilder pos. and bin(module)
+rsync -a {self.dsrc}/{self.packageName}/{self.fxmlFile.stem}.fxml {self.scenebuilderPos}
+rsync -a {self.dsrc}/{self.packageName}/{self.fxmlFile.stem}.fxml {self.dbin}/com.{self.packageName.replace('/', '.')}/com/{self.packageName}
+
+# provide further sync details here""")
 
     def doFurtherSetup(self):
         self.fxmlFile = input("Enter the fxml file name[if not, leave blank]: ")
@@ -394,10 +407,7 @@ public class {gotFile.stem} {{
             Path.touch(self.packageDir / (self.fxmlFile + ".fxml"))
         if self.cssFile:
             Path.touch(self.packageDir / (self.cssFile + ".css"))
-        if self.scenebuilderPos:
-            if Path(self.scenebuilderPos).is_dir():
-                Path.touch(Path(self.scenebuilderPos / (self.fxmlFile + ".fxml")))
-        Path.touch(self.updateScript)
+        (self.dbin / self.packageName.replace('/', '.')).mkdir()  # create module
 
 
 
