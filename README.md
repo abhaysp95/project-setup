@@ -14,7 +14,7 @@ Let's see how it is done. Here's a project creation demo for `java` language:
 
 <br>
 
-### Supported Languages:
+### Supported Languages/Tools:
 
 Currenlty, following languages(and tool/s) are supported in this project for _project creation_:
 
@@ -24,6 +24,7 @@ Currenlty, following languages(and tool/s) are supported in this project for _pr
 * Python
 * Web Designing(html,css,js)
 * Java-Servlet
+* JavaFX
 
 <br>
 
@@ -32,10 +33,13 @@ Currenlty, following languages(and tool/s) are supported in this project for _pr
 
 It's an interactive project which puts all the necessary files/folders in place as user tells and fills up some things already which is to be filled everytime,
 
-Here's an example of fillup for `Java-Servlet`:
+Here's an example of fillup for `Java-Servlet` and `JavaFX`:
 
 ![java-servlet-fillup](https://github.com/coolabhays/project-setup/raw/master/sshots/servlet-fillup.png)
 
+<hr>
+
+![javafx-fillup](sshots/javafx-fillup.png)
 
 And here's the directory hierarchy for all the supported languages:
 
@@ -59,6 +63,18 @@ And here's the directory hierarchy for all the supported languages:
 
 <hr>
 
+* **Java Servlet**:
+
+![servlet-dir-struct](https://github.com/coolabhays/project-setup/raw/master/sshots/structure-servlet.png)
+
+<hr>
+
+* **JavaFX**:
+
+![javafx-dir-struct](sshots/structure-javafx.png)
+
+<hr>
+
 * **Python**:
 
 ![python-dir-struct](https://github.com/coolabhays/project-setup/raw/master/sshots/structure-pyproj.png)
@@ -68,12 +84,6 @@ And here's the directory hierarchy for all the supported languages:
 * **Web Designing**:
 
 ![webd-dir-struct](https://github.com/coolabhays/project-setup/raw/master/sshots/structure-webdproj.png)
-
-<hr>
-
-* **Java Servlet**:
-
-![servlet-dir-struct](https://github.com/coolabhays/project-setup/raw/master/sshots/structure-servlet.png)
 
 <br>
 ```
