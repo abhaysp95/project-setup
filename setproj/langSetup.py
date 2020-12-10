@@ -340,7 +340,7 @@ public class {gotFile.stem} extends Application {{
 \tpublic void start(Stage primaryStage) throws Exception {{
 \t\tGridPane root = new GridPane();
 \t\tprimaryStage.setTitle("{self.projName}");
-\t\tprimaryStage.setScene(new Scene(root, "400", "400"));
+\t\tprimaryStage.setScene(new Scene(root, 400, 400));
 \t\tprimaryStage.show();
 \t}}
 \tpublic static void main(String ...args) {{
@@ -360,9 +360,9 @@ public class {gotFile.stem} extends Application {{
 
 \t@Override
 \tpublic void start(Stage primaryStage) throws Exception {{
-\t\tParent root = new FXMLLoader(getClass().getResource("/com/{self.packageName}/{self.fxmlFile}"));
+\t\tParent root = FXMLLoader(getClass().getResource("/com/{self.packageName}/{self.fxmlFile}"));
 \t\tprimaryStage.setTitle("{self.projName}");
-\t\tprimaryStage.setScene(new Scene(root, "400", "400"));
+\t\tprimaryStage.setScene(new Scene(root, 400, 400));
 \t\tprimaryStage.show();
 \t}}
 \tpublic static void main(String ...args) {{
