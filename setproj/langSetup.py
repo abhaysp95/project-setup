@@ -438,6 +438,8 @@ rsync -a {self.dsrc}/{self.packageName}/{Path(self.fxmlFile).stem}.fxml {self.db
             Path.touch(self.packageDir / (self.cssFile + ".css"))
         (self.dbin / ('com.' + self.packageName.replace('/', '.'))).mkdir()  # create module
         LangJavaFx.__writeToFiles(self)
+        # or just do 0o754
+        Path(self.updateScript).chmod(492)  # octal permission is 754(4 + 40 + 448)
 
 class LangServlet(SetProject):
     """ further project setup for Java Servlet languages """
