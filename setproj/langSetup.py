@@ -327,7 +327,7 @@ class LangJavaFx(LangJava):
             with open(gotFile, "w") as file:
                 if gotFile.stem == "Main":
                     if not self.fxmlFile:
-                        file.writelines(f"""package com.{self.packageName.replace('/', '.')}
+                        file.writelines(f"""package com.{self.packageName.replace('/', '.')};
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -348,7 +348,7 @@ public class {gotFile.stem} extends Application {{
 \t}}
 }}""")
                     else:
-                        file.writelines(f"""package com.{self.packageName.replace('/', '.')}
+                        file.writelines(f"""package com.{self.packageName.replace('/', '.')};
 
 import javafx.application.Application;
 import javafx.stage.Stage;
