@@ -2,6 +2,7 @@ from pathlib import Path
 from os import uname
 from sys import exit
 import subprocess
+import re
 
 # TODO:
 # see, if you can activate virtualenv
@@ -321,9 +322,16 @@ class LangJavaFx(LangJava):
         self.scenebuilderPos = "/opt/SceneBuilder/app"
         self.updateScript = self.dsrc / "update_files.sh"
         self.module = self.dsrc / "module-info.java"
+        self.javaFiles = list()
+
+    def __getJavaFiles(self):
+        for file in self.dsrc.rglob("*.java"):
+            self.javaFiles.append(file)
+        print(self.javaFiles)
 
     def __writeToFiles(self):
-        for gotFile in self.dsrc.rglob("*.java"):
+        # for gotFile in self.dsrc.rglob("*.java"):
+        for gotFile in self.javaFiles:
             with open(gotFile, "w") as file:
                 if gotFile.stem == "Main":
                     if not self.fxmlFile:
@@ -377,12 +385,21 @@ public class {gotFile.stem} {{
 \t/** code here */
 }}""")
         # basic setup for fxml files
+        isControllerAvailable = False
+        controllerName = ""
         for gotFile in self.dsrc.rglob("*.fxml"):
+            for file in self.javaFiles:
+                res = re.match(r".*/\.?(.*[cC]ontroller.*)\..*$", str(file))
+                if res:
+                    isControllerAvailable = True
+                    controllerName = res.group(1)
+            if controllerName != "":
+                controllerName = "com." + self.packageName.replace('/', '.') + '.' + controllerName
             with open(gotFile, 'w') as file:
-                file.writelines("""<?import javafx.geometry.Insets?>
+                file.writelines(f"""<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.GridPane?>
 
-<GridPane fx:controller="" xmlns:fx="http://javafx.com/fxml">
+<GridPane fx:controller="{controllerName}" xmlns:fx="http://javafx.com/fxml">
 \t<!-- code here -->
 </GridPane>""")
         # basic setup for css files
@@ -392,10 +409,10 @@ public class {gotFile.stem} {{
         if self.scenebuilderPos:
             if Path(self.scenebuilderPos).is_dir():
                 with open(Path(self.scenebuilderPos + '/' + (self.fxmlFile + '.fxml')), 'w') as file:
-                    file.writelines("""<?import javafx.geometry.Insets?>
+                    file.writelines(f"""<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.GridPane?>
 
-<GridPane fx:controller="" xmlns:fx="http://javafx.com/fxml">
+<GridPane fx:controller="{controllerName}" xmlns:fx="http://javafx.com/fxml">
 \t<!-- code here -->
 </GridPane>""")
         with open(Path(self.module), 'w') as file:
@@ -406,10 +423,13 @@ module com.{self.packageName.replace('/', '.')} {{
 \trequires javafx.controls;
 
 \topens com.{self.packageName.replace('/', '.')} to javafx.fxml, javafx.graphics;
-}}
-                            """)
-        with open(Path(self.updateScript), 'w') as file:
-            file.writelines(f"""#!/usr/bin/env bash
+}}""")
+        # one of the two or both are required by user
+        if self.fxmlFile or self.cssFile:
+            with open(Path(self.updateScript), 'w') as file:
+                # if fxmlFile is available and not css one
+                if not self.cssFile:
+                    file.writelines(f"""#!/usr/bin/env bash
 
 # file: {Path(self.fxmlFile).stem}.fxml
 # source: {self.scenebuilderPos}
@@ -420,8 +440,40 @@ rsync -av {self.scenebuilderPos}/{Path(self.fxmlFile).stem}.fxml {self.dbin}/com
 # file: {Path(self.fxmlFile).stem}.fxml
 # source: src
 # desitnation: scenebuilder pos. and bin(module)
-rsync -a {self.dsrc}/{self.packageName}/{Path(self.fxmlFile).stem}.fxml {self.scenebuilderPos}
-rsync -a {self.dsrc}/{self.packageName}/{Path(self.fxmlFile).stem}.fxml {self.dbin}/com.{self.packageName.replace('/', '.')}/com/{self.packageName}
+rsync -a {self.dsrc}/com/{self.packageName}/{Path(self.fxmlFile).stem}.fxml {self.scenebuilderPos}
+rsync -a {self.dsrc}/com/{self.packageName}/{Path(self.fxmlFile).stem}.fxml {self.dbin}/com.{self.packageName.replace('/', '.')}/com/{self.packageName}
+
+# provide further sync details here""")
+                # if css file is available and not fxml one
+                elif not self.fxmlFile:
+                    file.writelines(f"""#!/usr/bin/env bash
+
+# file: {Path(self.cssFile).stem}.fxml
+# source: src
+# desitnation: scenebuilder pos. and bin(module)
+rsync -a {self.dsrc}/com/{self.packageName}/{Path(self.cssFile).stem}.css {self.dbin}/com.{self.packageName.replace('/', '.')}/com/{self.packageName}
+
+# provide further sync details here""")
+                # if both fxml and css are required by user
+                else:
+                    file.writelines(f"""#!/usr/bin/env bash
+
+# file: {Path(self.fxmlFile).stem}.fxml
+# source: {self.scenebuilderPos}
+# desitination: src and bin(module)
+rsync -av {self.scenebuilderPos}/{Path(self.fxmlFile).stem}.fxml {self.dsrc}/com/{self.packageName}
+rsync -av {self.scenebuilderPos}/{Path(self.fxmlFile).stem}.fxml {self.dbin}/com.{self.packageName.replace('/', '.')}/com/{self.packageName}
+
+# file: {Path(self.fxmlFile).stem}.fxml
+# source: src
+# desitnation: scenebuilder pos. and bin(module)
+rsync -a {self.dsrc}/com/{self.packageName}/{Path(self.fxmlFile).stem}.fxml {self.scenebuilderPos}
+rsync -a {self.dsrc}/com/{self.packageName}/{Path(self.fxmlFile).stem}.fxml {self.dbin}/com.{self.packageName.replace('/', '.')}/com/{self.packageName}
+
+# file: {Path(self.cssFile).stem}.fxml
+# source: src
+# desitnation: scenebuilder pos. and bin(module)
+rsync -a {self.dsrc}/com/{self.packageName}/{Path(self.cssFile).stem}.css {self.dbin}/com.{self.packageName.replace('/', '.')}/com/{self.packageName}
 
 # provide further sync details here""")
 
@@ -437,9 +489,11 @@ rsync -a {self.dsrc}/{self.packageName}/{Path(self.fxmlFile).stem}.fxml {self.db
         if self.cssFile:
             Path.touch(self.packageDir / (self.cssFile + ".css"))
         (self.dbin / ('com.' + self.packageName.replace('/', '.'))).mkdir()  # create module
+        LangJavaFx.__getJavaFiles(self)
         LangJavaFx.__writeToFiles(self)
         # or just do 0o754
-        Path(self.updateScript).chmod(492)  # octal permission is 754(4 + 40 + 448)
+        if Path(self.updateScript).is_file():
+            Path(self.updateScript).chmod(492)  # octal permission is 754(4 + 40 + 448)
 
 class LangServlet(SetProject):
     """ further project setup for Java Servlet languages """
