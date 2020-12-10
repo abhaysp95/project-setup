@@ -371,7 +371,7 @@ public class {gotFile.stem} extends Application {{
 }}""")
                 # going to be Controller or some other java files
                 else:
-                    file.writelines(f"""package com.{self.packageName.replace('/', '.')}
+                    file.writelines(f"""package com.{self.packageName.replace('/', '.')};
 
 public class {gotFile.stem} {{
 \t/** code here */
