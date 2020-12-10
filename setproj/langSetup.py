@@ -360,7 +360,7 @@ public class {gotFile.stem} extends Application {{
 
 \t@Override
 \tpublic void start(Stage primaryStage) throws Exception {{
-\t\tParent root = FXMLLoader.load(getClass().getResource("/com/{self.packageName}/{self.fxmlFile}"));
+\t\tParent root = FXMLLoader.load(getClass().getResource("/com/{self.packageName}/{self.fxmlFile}.fxml"));
 \t\tprimaryStage.setTitle("{self.projName}");
 \t\tprimaryStage.setScene(new Scene(root, 400, 400));
 \t\tprimaryStage.show();
