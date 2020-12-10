@@ -320,6 +320,7 @@ class LangJavaFx(LangJava):
         self.cssFile = None
         self.scenebuilderPos = "/opt/SceneBuilder/app"
         self.updateScript = self.dsrc / "update_files.sh"
+        self.module = self.dsrc / "module-info.java"
 
     def __writeToFiles(self):
         for gotFile in self.dsrc.rglob("*.java"):
@@ -390,13 +391,23 @@ public class {gotFile.stem} {{
                 file.write("/* provide styling here */")
         if self.scenebuilderPos:
             if Path(self.scenebuilderPos).is_dir():
-                with open(Path(self.scenebuilderPos + '/' + self.fxmlFile), 'w') as file:
+                with open(Path(self.scenebuilderPos + '/' + (self.fxmlFile + '.fxml')), 'w') as file:
                     file.writelines("""<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.GridPane?>
 
 <GridPane fx:controller="" xmlns:fx="http://javafx.com/fxml">
 \t<!-- code here -->
 </GridPane>""")
+        with open(Path(self.module), 'w') as file:
+            file.writelines(f"""/** module file for project */
+
+module com.{self.packageName.replace('/', '.')} {{
+\trequires javafx.fxml;
+\trequires javafx.controls;
+
+\topens com.{self.packageName.replace('/', '.')} to javafx.fxml, javafx.graphics;
+}}
+                            """)
         with open(Path(self.updateScript), 'w') as file:
             file.writelines(f"""#!/usr/bin/env bash
 
