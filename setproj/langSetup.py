@@ -280,11 +280,12 @@ class {gotFile.stem} {{
         self.packageName = input("Package Name [if not provided, default will be hostname]: ")
         if not self.packageName:
             self.packageDir = self.dsrc / ('com') / uname()[1]
+            self.packageName = uname()[1]
         else:
             self.packageDir = self.dsrc / ('com') / self.packageName
         className = list()
         try:
-            count = int(input('Number of class files(except Main.java): '))
+            count = int(input('Number of class files(except Main.java)[Enter 0 if none]: '))
         except ValueError as ve:
             print("Enter correct values: " + ve)
         else:
