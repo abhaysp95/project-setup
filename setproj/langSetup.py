@@ -34,7 +34,7 @@ class LangC(SetProject):
     def __writeToFiles(self):
         """write some initial data to files"""
         with open(self.mfile, 'w') as file:
-            file.writelines(f"""// main file
+            file.writelines("""// main file
 
 #include <stdio.h>
 
@@ -45,24 +45,21 @@ int main(int argc, char **argv) {{
 
         try:
             for gotFile in self.path.rglob("*.h"):
-                filename = str(gotFile.stem)
+                file_name = str(gotFile.stem)
                 with open(gotFile, 'w') as file:
                     file.writelines(f"""// header file
-#ifndef _GUARD_{filename.upper()}_H_
-#define _GUARD_{filename.upper()}_H_
+#ifndef _GUARD_{file_name.upper()}_H_
+#define _GUARD_{file_name.upper()}_H_
 
 // write here
 
 #endif""")
-                c_file_name = self.src / (str(gotFile.stem) + ".c")
-                print(c_file_name)
-                with open(c_file_name, 'w') as file:
-                    file.writelines(f"""// c file for \"{filename}\"
+                with open(self.src / (file_name + ".c"), 'w') as file:
+                    file.writelines(f"""// c file for \"{file_name}.h\"
 
-#include \"../inc/{filename}.h\"
+#include \"../inc/{file_name}.h\"
 
-// write here
-""")
+// write here""")
         except AttributeError:
             pass
         except FileNotFoundError:
@@ -128,12 +125,9 @@ clean:
 .PHONY: all dir debug clean""")
 
     def setup(self):
-        header_count = input("Give number of header files you want to create[leave blank for none]: ")
-        self.makef = self.path / 'Makefile'
         self.src.mkdir()
         Path.touch(self.mfile)
-        header_files = list()
-        corresponding_c_files = list()
+        header_count = input("Give number of header files you want to create[leave blank for none]: ")
         if header_count:
             try:
                 header_count = int(header_count)
@@ -143,13 +137,8 @@ clean:
                 self.inc.mkdir()
                 for count in range(header_count):
                     file_name = input(str(count + 1) + ": ")
-                    header_file_name = file_name + ".h"
-                    c_file_name = file_name + ".c"
-                    header_files.append(header_file_name)
-                    corresponding_c_files.append(c_file_name)
-                for count in range(header_count):
-                    Path.touch(self.inc / header_files[count])
-                    Path.touch(self.src / corresponding_c_files[count])
+                    Path.touch(self.inc / (file_name + ".h"))
+                    Path.touch(self.src / (file_name + ".c"))
         self.compiler = input("Select compiler[defualt to clang]: ")
         if not self.compiler:
             self.compiler = "clang"
