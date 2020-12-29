@@ -125,6 +125,7 @@ clean:
 .PHONY: all dir debug clean""")
 
     def setup(self):
+        """general setup for setting up C lang project"""
         self.src.mkdir()
         Path.touch(self.mfile)
         header_count = input("Give number of header files you want to create[leave blank for none]: ")
@@ -253,6 +254,7 @@ clean:
 .PHONY: all dir debug clean""")
 
     def setup(self):
+        """general setup for setting up C++ lang project"""
         self.src.mkdir()
         Path.touch(self.mfile)
         headers_count = input("Give number of header files you want to create[leave blank for none]: ")
@@ -284,6 +286,7 @@ class LangJava(SetProject):
         self.packageDir = None
 
     def __writeToFiles(self):
+        """write some initial data to files"""
         for gotFile in self.dsrc.rglob("*.java"):
             with open(gotFile, 'w') as file:
                 if gotFile.stem == "Main":
@@ -302,6 +305,7 @@ class {gotFile.stem} {{
 }}""")
 
     def setup(self):
+        """general setup for setting JAVA lang project"""
         self.dsrc = self.path / 'src'
         self.dbin = self.path / 'bin'
         self.packageName = input("Package Name [if not provided, default will be hostname]: ")
@@ -353,12 +357,13 @@ class LangJavaFx(LangJava):
         self.javaFiles = list()
 
     def __getJavaFiles(self):
+        """take all java files as input from user"""
         for file in self.dsrc.rglob("*.java"):
             self.javaFiles.append(file)
         print(self.javaFiles)
 
     def __writeToFiles(self):
-        # for gotFile in self.dsrc.rglob("*.java"):
+        """write some initial data to files"""
         for gotFile in self.javaFiles:
             with open(gotFile, "w") as file:
                 if gotFile.stem == "Main":
@@ -506,6 +511,7 @@ rsync -a {self.dsrc}/com/{self.packageName}/{Path(self.cssFile).stem}.css {self.
 # provide further sync details here""")
 
     def doFurtherSetup(self):
+        """general setup for settin up JAVAFX project(additional after JAVA setup)"""
         self.fxmlFile = input("Enter the fxml file name[if not, leave blank]: ")
         self.cssFile = input("Enter the css file name[if not, leave blank]: ")
         print("Enter scenebuilder position")
@@ -531,6 +537,7 @@ class LangServlet(SetProject):
         self.packageName = None
 
     def __writeToFiles(self):
+        """write some initial data to files"""
         with open(self.path / "index.html", 'w') as file:
             file.writelines(f"""<!DOCTYPE html>
 <html>
@@ -570,6 +577,7 @@ public class {javafile.stem.title()} extends HttpServlet {{
 
 
     def setup(self):
+        """general setup for setting up JAVA SERVLET project"""
         src = self.path / 'src'
         classes = self.path / 'WEB-INF' / 'classes'
         findex = self.path / 'index.html'
@@ -620,6 +628,7 @@ class LangPython(SetProject):
         self.path = None
 
     def setup(self):
+        """general setup for setting up a PYTHON project"""
         choiceVenv = input("Want virtualenv setup for python? [y/n]: ")
         if choiceVenv == "y":
             directory = input('Enter dir name(blank for current dir): ')
@@ -670,6 +679,7 @@ class LangWebD(SetProject):
         super().__init__(name)
 
     def setup(self):
+        """general setup for setting up WEB-DESIGNING project"""
         index = self.path / 'index.html'
         style = self.path / 'style.css'
         script = self.path / 'script.js'
