@@ -24,11 +24,11 @@ class LangC(SetProject):
 
     def __init__(self, name='new-project'):
         super().__init__(name)
-        self.mfile = None
-        self.hfile = None
-        self.makef = None
-        self.sefile = ''
-        self.hefile = ''
+        self.src = self.path / "src"
+        self.obj = self.path / "obj"
+        self.inc = self.path / "inc"
+        self.mfile = self.src / "main.c"
+        self.makef = self.path / "Makefile"
         self.compiler = None
 
     def __writeToFiles(self):
@@ -44,10 +44,25 @@ int main(int argc, char **argv) {{
 }}""")
 
         try:
-            with open(self.hefile, 'w') as file:
-                file.write("#pragma once")
-            with open(self.sefile, 'w') as file:
-                file.write(f"#include \"../inc/{self.hefile.stem}.h\"")
+            for gotFile in self.path.rglob("*.h"):
+                filename = str(gotFile.stem)
+                with open(gotFile, 'w') as file:
+                    file.writelines(f"""// header file
+#ifndef _GUARD_{filename.upper()}_H_
+#define _GUARD_{filename.upper()}_H_
+
+// write here
+
+#endif""")
+                c_file_name = self.src / (str(gotFile.stem) + ".c")
+                print(c_file_name)
+                with open(c_file_name, 'w') as file:
+                    file.writelines(f"""// c file for \"{filename}\"
+
+#include \"../inc/{filename}.h\"
+
+// write here
+""")
         except AttributeError:
             pass
         except FileNotFoundError:
@@ -59,7 +74,8 @@ CC     = {self.compiler}
 CFLAG  = -Wall -std=c99
 CDFLAG = -Wall -std=c99 -g
 LD     = {self.compiler}
-LFLAG  = -v
+LDFLAG = -v
+LFLAG  =
 
 
 SRC_DIR   = src
@@ -102,7 +118,7 @@ ${{DEBUG_DIR}}/%.o: ${{SRC_DIR}}/%.c
 
 ${{DEBUG_BIN}}: ${{DEBUG_OBJ}}
 \t-@echo "Linking to -> $@"
-\t${{LD}} ${{LFLAG}} -o $@ ${{DEBUG_DIR}}/*.o
+\t${{LD}} ${{LDFLAG}} -o $@ ${{DEBUG_DIR}}/*.o
 
 
 clean:
@@ -112,20 +128,28 @@ clean:
 .PHONY: all dir debug clean""")
 
     def setup(self):
-        src = self.path / 'src'
-        obj = self.path / 'obj'
-        inc = self.path / 'inc'
-        self.mfile = src / 'main.c'
-        self.hfile = input("Press enter if don't want header file created: ")
+        header_count = input("Give number of header files you want to create[leave blank for none]: ")
         self.makef = self.path / 'Makefile'
-        src.mkdir()
+        self.src.mkdir()
         Path.touch(self.mfile)
-        if self.hfile:
-            inc.mkdir()
-            self.hefile = inc / (self.hfile + '.h')
-            self.sefile = src / (self.hfile + '.c')
-            Path.touch(self.hefile)
-            Path.touch(self.sefile)
+        header_files = list()
+        corresponding_c_files = list()
+        if header_count:
+            try:
+                header_count = int(header_count)
+            except ValueError:
+                print("No header file created")
+            else:
+                self.inc.mkdir()
+                for count in range(header_count):
+                    file_name = input(str(count + 1) + ": ")
+                    header_file_name = file_name + ".h"
+                    c_file_name = file_name + ".c"
+                    header_files.append(header_file_name)
+                    corresponding_c_files.append(c_file_name)
+                for count in range(header_count):
+                    Path.touch(self.inc / header_files[count])
+                    Path.touch(self.src / corresponding_c_files[count])
         self.compiler = input("Select compiler[defualt to clang]: ")
         if not self.compiler:
             self.compiler = "clang"
@@ -220,7 +244,7 @@ ${{DEBUG_BIN}}: ${{DEBUG_OBJ}}
 
 
 clean:
-\trm -rf ${{DIRS}}
+\trm -rf ${{DIRS}} $(notdir $(realpath .))
 
 .SILENT:
 .PHONY: all dir debug clean""")
