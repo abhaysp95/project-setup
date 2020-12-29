@@ -151,17 +151,17 @@ class LangCpp(SetProject):
 
     def __init__(self, name='new-project'):
         super().__init__(name)
-        self.mfile = None
-        self.hfile = None
-        self.makef = None
-        self.sefile = ''
-        self.hefile = ''
+        self.src = self.path / "src"
+        self.obj = self.path / "obj"
+        self.inc = self.path / "inc"
+        self.mfile = self.src / "main.cpp"
+        self.makef = self.path / "Makefile"
         self.compiler = None
 
     def __writeToFiles(self):
         """write some initial data to files"""
         with open(self.mfile, 'w') as file:
-            file.writelines(f"""// main file
+            file.writelines("""// main file
 
 #include <iostream>
 
@@ -171,10 +171,23 @@ int main(int argc, char **argv) {{
 }}""")
 
         try:
-            with open(self.hefile, 'w') as file:
-                file.write("#pragma once")
-            with open(self.sefile, 'w') as file:
-                file.write(f"#include \"../inc/{self.hefile.stem}.hpp\"")
+            for gotFile in self.path.rglob("*.hpp"):
+                file_name = str(gotFile.stem)
+                with open(gotFile, 'w') as file:
+                    file.writelines(f"""// header file
+
+#ifndef _GUARD_{file_name.upper()}_HPP_
+#define _GUARD_{file_name.upper()}_HPP_
+
+// write here
+
+#endif""")
+                with open(self.src / (file_name + ".cpp"), 'w') as file:
+                    file.writelines(f"""// cpp file for \"{file_name}.hpp\"
+
+#include \"../inc/{file_name}.hpp\"
+
+// write here""")
         except AttributeError:
             pass
         except FileNotFoundError:
@@ -186,7 +199,8 @@ CC     = {self.compiler}
 CFLAG  = -Wall -std=c++14
 CDFLAG = -Wall -std=c++14 -g
 LD     = {self.compiler}
-LFLAG  = -v
+LDFLAG = -v
+LFLAG  =
 
 
 SRC_DIR   = src
@@ -229,7 +243,7 @@ ${{DEBUG_DIR}}/%.o: ${{SRC_DIR}}/%.cpp
 
 ${{DEBUG_BIN}}: ${{DEBUG_OBJ}}
 \t-@echo "Linking to -> $@"
-\t${{LD}} ${{LFLAG}} -o $@ ${{DEBUG_DIR}}/*.o
+\t${{LD}} ${{LDFLAG}} -o $@ ${{DEBUG_DIR}}/*.o
 
 
 clean:
@@ -239,20 +253,20 @@ clean:
 .PHONY: all dir debug clean""")
 
     def setup(self):
-        src = self.path / 'src'
-        obj = self.path / 'obj'
-        inc = self.path / 'inc'
-        self.mfile = src / 'main.cpp'
-        self.hfile = input("Press enter if don't want header file created: ")
-        self.makef = self.path / 'Makefile'
-        src.mkdir()
+        self.src.mkdir()
         Path.touch(self.mfile)
-        if self.hfile:
-            inc.mkdir()
-            self.hefile = inc / (self.hfile + '.hpp')
-            self.sefile = src / (self.hfile + '.cpp')
-            Path.touch(self.hefile)
-            Path.touch(self.sefile)
+        headers_count = input("Give number of header files you want to create[leave blank for none]: ")
+        if headers_count:
+            try:
+                headers_count = int(headers_count)
+            except ValueError:
+                print("No header file created")
+            else:
+                self.inc.mkdir()
+                for count in range(headers_count):
+                    file_name = input(str(count + 1) + ": ")
+                    Path.touch(self.inc / (file_name + ".hpp"))
+                    Path.touch(self.src / (file_name + ".cpp"))
         self.compiler = input("Enter compiler[defualt is clang++]: ")
         if not self.compiler:
             self.compiler = "clang++"
