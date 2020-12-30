@@ -38,10 +38,10 @@ class LangC(SetProject):
 
 #include <stdio.h>
 
-int main(int argc, char **argv) {{
+int main(int argc, char **argv) {
 \t/* code here */
 \treturn 0;
-}}""")
+}""")
 
         try:
             for gotFile in self.path.rglob("*.h"):
@@ -166,10 +166,10 @@ class LangCpp(SetProject):
 
 #include <iostream>
 
-int main(int argc, char **argv) {{
+int main(int argc, char **argv) {
 \t/* code here */
 \treturn 0;
-}}""")
+}""")
 
         try:
             for gotFile in self.path.rglob("*.hpp"):
