@@ -167,10 +167,10 @@ class LangCpp(SetProject):
 
 #include <iostream>
 
-int main(int argc, char **argv) {{
+int main(int argc, char **argv) {
 \t/* code here */
 \treturn 0;
-}}""")
+}""")
             else:
                 file.writelines(f"""// main file
 
@@ -183,8 +183,8 @@ using namespace std;
 
 #define ll long long
 #define lD long double
-#define rep(n) for (int i = 0; i < (int)n; i++)
-#define repl(n) for (ll i = 0; i < (ll)n; i++)
+#define rep(i, n) for (int i = 0; i < (int)n; i++)
+#define repl(i, n) for (ll i = 0; i < (ll)n; i++)
 #define repd(i, n) for (int i = n - 1; i >= 0; i--)
 #define repld(i, n) for (ll i = n - 1; i >= 0; i--)
 #define loop(i,a,b) for (int i = (int)a; i < (int)b; i++)
@@ -200,7 +200,7 @@ using namespace std;
 #define eb emplace_back
 #define ab(a) (a < 0)?(-1*a):a
 #define mset(a,b,c) loop(i,0,b) a[i]=c
-#define asum(a,b,c) WL(b) {{ (c) += (a)[(b)]; }}
+#define asum(a,b,c) {{ int i = 0; c = 0; repd(i, b) c+=a[(i)]; }}
 #define F first
 #define S second
 #define mp make_pair
@@ -237,10 +237,20 @@ typedef vector<pii> vpii;
 template<typename T> T gcd(T a, T b) {{ return (b?__gcd(a,b):a); }}
 template<typename T> T lcm(T a, T b) {{ return (a*(b/gcd(a,b))); }}
 
+inline void tokenize(const string& str, vs& out, const char&& delim) {{
+	stringstream ss(str);
+	string s;
+	while (getline(ss, s, delim)) out.pb(s);
+}}
+inline void tokenize(const string& str, vi& out, const char&& delim) {{
+	stringstream ss(str);
+	for (int i; ss >> i;) {{ out.pb(i); if (ss.peek() == ',') ss.ignore(); }}
+}}
+
 void solvethetestcase();
 
 signed main() {{
-	// comment when using scanf, printf \\
+	// comment when using scanf, printf
 	FAST_IO
 
 	// comment for input through console
@@ -250,8 +260,8 @@ signed main() {{
 	// (uncomment for multiple test cases) \\
 	cin >> t;
 	loopl (testcase, 1, t + 1) {{
-		// (uncomment for codejam) \\
-		printf("Case #%lld: ", testcase);
+		// (uncomment for multiple test cases) \\
+		cout << "Case #" << testcase << ": ";
 		solvethetestcase();
     }}
 }}
@@ -348,7 +358,7 @@ clean:
         """general setup for setting up C++ lang project"""
         self.src.mkdir()
         Path.touch(self.mfile)
-        for_cp = input("is the setup for competitive coding? [y/n](no option is considered no): ")
+        for_cp = input("Is the setup for competitive coding? [y/n](no option is considered no): ")
         if for_cp == '' or for_cp == 'n':
             for_cp = False
         else:
@@ -365,7 +375,7 @@ clean:
                     file_name = input(str(count + 1) + ": ")
                     Path.touch(self.inc / (file_name + ".hpp"))
                     Path.touch(self.src / (file_name + ".cpp"))
-        self.compiler = input("Enter compiler[defualt is clang++]: ")
+        self.compiler = input("Enter compiler[default is clang++]: ")
         if not self.compiler:
             self.compiler = "clang++"
         LangCpp.__writeToFiles(self, for_cp)
