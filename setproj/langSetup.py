@@ -38,10 +38,10 @@ class LangC(SetProject):
 
 #include <stdio.h>
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv) {{
 \t/* code here */
 \treturn 0;
-}""")
+}}""")
 
         try:
             for gotFile in self.path.rglob("*.h"):
@@ -159,17 +159,108 @@ class LangCpp(SetProject):
         self.makef = self.path / "Makefile"
         self.compiler = None
 
-    def __writeToFiles(self):
+    def __writeToFiles(self, for_cp = False):
         """write some initial data to files"""
         with open(self.mfile, 'w') as file:
-            file.writelines("""// main file
+            if not for_cp:
+                file.writelines("""// main file
 
 #include <iostream>
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv) {{
 \t/* code here */
 \treturn 0;
-}""")
+}}""")
+            else:
+                file.writelines(f"""// main file
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcomment"
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define ll long long
+#define lD long double
+#define rep(n) for (int i = 0; i < (int)n; i++)
+#define repl(n) for (ll i = 0; i < (ll)n; i++)
+#define repd(i, n) for (int i = n - 1; i >= 0; i--)
+#define repld(i, n) for (ll i = n - 1; i >= 0; i--)
+#define loop(i,a,b) for (int i = (int)a; i < (int)b; i++)
+#define rloop(i,a,b) for (int i = (int)a; i <= (int)b; i++)
+#define loopl(i,a,b) for (ll i = (ll)a; i < (ll)b; ++i)
+#define rloopl(i,a,b) for (ll i = (ll)a; i <= (ll)b; ++i)
+#define loopd(i,a,b) for (int i = (int)a; i > b; i--)
+#define rloopd(i,a,b) for (int i = (int)a; i >= b; i--)
+#define loopld(i,a,b) for (ll i = (ll)a; i > b; i--)
+#define rloopld(i,a,b) for (ll i = (ll)a; i >= b; i--)
+#define WL(t) while(t--)
+#define pb push_back
+#define eb emplace_back
+#define ab(a) (a < 0)?(-1*a):a
+#define mset(a,b,c) loop(i,0,b) a[i]=c
+#define asum(a,b,c) WL(b) {{ (c) += (a)[(b)]; }}
+#define F first
+#define S second
+#define mp make_pair
+#define clr(x) x.clear()
+#define itoc(c) ((char)(((int)'0')+c))
+#define all(p) p.begin(),p.end()
+#define max(x,y) (x>y)?x:y
+#define min(x,y) (x<y)?x:y
+#define remax(a,b) (a = max(a,b))
+#define remin(a,b) (a = min(a,b))
+#define mid(s,e) (s+(e-s)/2)
+#define PQ(type) priority_queue<type>
+#define PQD(type) priority_queue<type,vector<type>,greater<type>>
+#define SZ(x) ((int)(x).size())
+#define inrange(i,a,b) ((i>=min(a,b)) && (i<=max(a,b)))
+
+#define fileI(name) \\
+	freopen(name".in", "r", stdin);
+#define fileIO(name) \\
+	freopen(name".in", "r", stdin); \\
+	freopen(name".out", "w", stdout);
+#define FAST_IO \\
+	ios_base::sync_with_stdio(false); \\
+	cin.tie(NULL); \\
+	cout.tie(NULL);
+
+typedef vector<int> vi;
+typedef vector<vector<int>> vvi;
+typedef pair<ll, ll> pll;
+typedef pair<int, int> pii;
+typedef vector<pll> vpll;
+typedef vector<pii> vpii;
+
+template<typename T> T gcd(T a, T b) {{ return (b?__gcd(a,b):a); }}
+template<typename T> T lcm(T a, T b) {{ return (a*(b/gcd(a,b))); }}
+
+void solvethetestcase();
+
+signed main() {{
+	// comment when using scanf, printf \\
+	FAST_IO
+
+	// comment for input through console
+	fileI("input")
+
+	int t = 1;
+	// (uncomment for multiple test cases) \\
+	cin >> t;
+	loopl (testcase, 1, t + 1) {{
+		// (uncomment for codejam) \\
+		printf("Case #%lld: ", testcase);
+		solvethetestcase();
+    }}
+}}
+
+void solvethetestcase() {{
+    // write here
+}}
+
+#pragma GCC diagnostic pop""")
 
         try:
             for gotFile in self.path.rglob("*.hpp"):
@@ -257,6 +348,11 @@ clean:
         """general setup for setting up C++ lang project"""
         self.src.mkdir()
         Path.touch(self.mfile)
+        for_cp = input("is the setup for competitive coding? [y/n](no option is considered no): ")
+        if for_cp == '' or for_cp == 'n':
+            for_cp = False
+        else:
+            for_cp = True
         headers_count = input("Give number of header files you want to create[leave blank for none]: ")
         if headers_count:
             try:
@@ -272,7 +368,7 @@ clean:
         self.compiler = input("Enter compiler[defualt is clang++]: ")
         if not self.compiler:
             self.compiler = "clang++"
-        LangCpp.__writeToFiles(self)
+        LangCpp.__writeToFiles(self, for_cp)
 
 
 class LangJava(SetProject):
