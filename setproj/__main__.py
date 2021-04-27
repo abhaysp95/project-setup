@@ -51,31 +51,31 @@ def projectSetup(gitit):
             # check if project already exist
             ifProjectExists(name)
             if language.lower() == 'c':
-                print("project setup for C language, named: {}".format(name))
+                print("Project setup for C language, named: {}".format(name))
                 langs = langSetup.LangC(name)
                 langs.setup()
             elif language.lower() in ["cpp", "c++"]:
-                print("project setup for C++ language, named: {}".format(name))
+                print("Project setup for C++ language, named: {}".format(name))
                 langs = langSetup.LangCpp(name)
                 langs.setup()
             elif language.lower() == "java":
-                print("project setup for Java language, named: {}".format(name))
+                print("Project setup for Java language, named: {}".format(name))
                 langs = langSetup.LangJava(name)
                 langs.setup()
             elif language.lower() == "python":
-                print("project setup for Python language, named: {}".format(name))
+                print("Project setup for Python language, named: {}".format(name))
                 langs = langSetup.LangPython(name)
                 langs.setup()
             elif language.lower() == "webd":
-                print("project setup for Web Designing, named: {}".format(name))
+                print("Project setup for Web Designing, named: {}".format(name))
                 langs = langSetup.LangWebD(name)
                 langs.setup()
             elif language.lower() in ["servlet", "java-servlet", "servlet-java"]:
-                print("project setup for Java Servlet, named: {}".format(name))
+                print("Project setup for Java Servlet, named: {}".format(name))
                 langs = langSetup.LangServlet(name)
                 langs.setup()
             elif language.lower() in ["javafx", "JavaFX", "JavaFx"]:
-                print("project setup for JavaFX, named: {}".format(name))
+                print("Project setup for JavaFX, named: {}".format(name))
                 langs = langSetup.LangJavaFx(name)
                 langs.setup()
                 langs.doFurtherSetup()
