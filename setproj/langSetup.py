@@ -278,6 +278,11 @@ inline void tokenize(const string& str, vi& out, const char&& delim) {{
 	stringstream ss(str);
 	for (int i; ss >> i;) {{ out.pb(i); if (ss.peek() == ',') ss.ignore(); }}
 }}
+inline void ltrim(string& s) {{ s.erase(s.begin(), find_if(all(s), not1(ptr_fun<int, int>(isspace)))); }}
+inline void rtrim(string& s) {{ s.erase(find_if(rall(s), not1(ptr_fun<int, int>(isspace))).base(), s.end()); }}
+inline void trim(string& s) {{ ltrim(s); rtrim(s); }}
+inline string cltrim(string s) {{ ltrim(s); return s; }}
+inline string crtrim(string s) {{ rtrim(s); return s; }}
 
 void solvethetestcase();
 
@@ -285,18 +290,18 @@ signed main() {{
 	// comment when using scanf, printf
 	FAST_IO
 
-	// set the seed \
-	srand(chrono::high_resolution_clock::now().time_since_epoch().count());
+	// set the seed
+	// srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 	// comment for input through console
 	fileI("input")
 
 	int t = 1;
-	// (uncomment for multiple test cases) \\
-	cin >> t;
+	// (uncomment for multiple test cases)
+	// cin >> t;
 	loopl (testcase, 1, t + 1) {{
-		// (uncomment for multiple test cases) \\
-		cout << "Case #" << testcase << ": ";
+		// (uncomment for multiple test cases)
+		// cout << "Case #" << testcase << ": ";
 		solvethetestcase();
     }}
 }}
