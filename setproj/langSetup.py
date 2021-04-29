@@ -172,7 +172,7 @@ int main(int argc, char **argv) {
 \treturn 0;
 }""")
             else:
-                file.writelines(f"""// main file
+                file.writelines(f"""//main file
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wcomment"
@@ -185,47 +185,47 @@ using namespace std;
 #define lD long double
 #define PI 3.1415926535897932384626
 #define INF 1e9
-#define rep(i, n) for (int i = 0; i < (int)n; i++)
-#define repl(i, n) for (ll i = 0; i < (ll)n; i++)
-#define repd(i, n) for (int i = n - 1; i >= 0; i--)
-#define repld(i, n) for (ll i = n - 1; i >= 0; i--)
-#define loop(i,a,b) for (int i = (int)a; i < (int)b; i++)
-#define rloop(i,a,b) for (int i = (int)a; i <= (int)b; i++)
-#define loopl(i,a,b) for (ll i = (ll)a; i < (ll)b; ++i)
-#define rloopl(i,a,b) for (ll i = (ll)a; i <= (ll)b; ++i)
-#define loopd(i,a,b) for (int i = (int)a; i > b; i--)
-#define rloopd(i,a,b) for (int i = (int)a; i >= b; i--)
-#define loopld(i,a,b) for (ll i = (ll)a; i > b; i--)
-#define rloopld(i,a,b) for (ll i = (ll)a; i >= b; i--)
-#define wl (t) while(t--)
+#define rep(i, n) for (int (i) = 0; (i) < (int)(n); (i)++)
+#define repl(i, n) for (ll (i) = 0; (i) < (ll)(n); (i)++)
+#define repd(i, n) for (int (i) = (n) - 1; (i) >= 0; (i)--)
+#define repld(i, n) for (ll (i) = (n) - 1; (i) >= 0; (i)--)
+#define loop(i,a,b) for (int (i) = (int)(a); (i) < (int)(b); (i)++)
+#define rloop(i,a,b) for (int (i) = (int)(a); (i) <= (int)(b); (i)++)
+#define loopl(i,a,b) for (ll (i) = (ll)(a); (i) < (ll)(b); (i)++)
+#define rloopl(i,a,b) for (ll (i) = (ll)(a); (i) <= (ll)(b); ++(i))
+#define loopd(i,a,b) for (int (i) = (int)(a); (i) > (b); (i)--)
+#define rloopd(i,a,b) for (int (i) = (int)(a); (i) >= (b); (i)--)
+#define loopld(i,a,b) for (ll (i) = (ll)(a); (i) > (b); (i)--)
+#define rloopld(i,a,b) for (ll (i) = (ll)(a); (i) >= (b); (i)--)
+#define wl (t) while((t)--)
 #define pb push_back
 #define eb emplace_back
-#define ab(a) (a < 0)?(-1*a):a
-#define mset(a,b,c) loop(i,0,b) a[i]=c
-#define asum(a,b,c) {{ int i = 0; c = 0; repd(i, b) c+=a[(i)]; }}
+#define ab(a) (a < 0)?(-1*(a)):(a)
+#define mset(a,b,c) loop(i,0,b) (a)[(i)]=(c)
+#define asum(a,b,c) {{ int (i) = 0; (c) = 0; repd(i, b) (c)+=(a)[(i)]; }}
 #define fe first
 #define se second
 #define mp make_pair
-#define clr(x) x.clear()
-#define itoc(c) ((char)(((int)'0')+c))
-#define all(p) p.begin(),p.end()
+#define clr(x) (x).clear()
+#define itoc(c) ((char)(((int)'0')+(c)))
+#define all(p) (p).begin(),(p).end()
 #define rall(p) (p).rbegin(),(p).rend()
-#define tr(c,it) for(__typeof__((c)).begin() it = (c).begin(); it != (c).end(); it++)
-#define trr(c,it) for(__typeof__((c)).rbegin() it = (c).rbegin(); it != (c).rend(); it++)
+#define tr(c,it) for(__typeof__((c)).begin() (it) = (c).begin(); (it) != (c).end(); (it)++)
+#define trr(c,it) for(__typeof__((c)).rbegin() (it) = (c).rbegin(); (it) != (c).rend(); (it)++)
 #define present(c,x) ((c).find(x) != (c).end())  // container version, log(n) for set and map
-#define cpresent(c,x) (find(all(c),x) != (c).end())  // works for all container
+#define cpresent(c,x) (find(all(c),(x)) != (c).end())  // works for all container
 #define mx(x,y) ((x)>(y)?(x):(y))
 #define mn(x,y) ((x)<(y)?(x):(y))
-#define remax(a,b) (a = max(a,b))
-#define remin(a,b) (a = min(a,b))
-#define mid(s,e) (s+(e-s)/2)
+#define rmx(a,b) ((a) = mx(a,b))
+#define rmn(a,b) ((a) = mn(a,b))
+#define mid(s,e) ((s)+((e)-(s))/2)
 #define mod(a,b) ((a)-((a)/(b))*(b))
 #define pq(type) priority_queue<type>
 #define pqd(type) priority_queue<type,vector<type>,greater<type>>
 #define umap unordered_map
 #define uset unordered_set
 #define sz(x) ((int)(x).size())
-#define inrange(i,a,b) ((i>=min(a,b)) && (i<=max(a,b)))
+#define inrange(i,a,b) (((i)>=mn(a,b)) && ((i)<=mx(a,b)))
 #define cfp(x) \
 	cout << fixed << showpoint; \
 	cout << setprecision(x);
@@ -254,16 +254,16 @@ typedef vector<pll> vpll;
 typedef vector<pii> vpii;
 mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
 int rngi(int lim) {{
-	uniform_int_distribution<int> uid(0,lim-1);
+	uniform_int_distribution<int> uid(0,(lim)-1);
 	return uid(rang);
 }}
 double rngr(double lim) {{
-	uniform_real_distribution<double> urd(0,lim-1);
+	uniform_real_distribution<double> urd(0,(lim)-1);
 	return urd(rang);
 }}
 
-template<typename T> T gcd(T a, T b) {{ return (b?__gcd(a,b):a); }}
-template<typename T> T lcm(T a, T b) {{ return (a*(b/gcd(a,b))); }}
+template<typename T> T gcd(T a, T b) {{ return ((b)?__gcd(a,b):(a)); }}
+template<typename T> T lcm(T a, T b) {{ return ((a)*((b)/gcd(a,b))); }}
 
 inline void tokenize(const string& str, vs& out, const char&& delim) {{
 	stringstream ss(str);
@@ -287,27 +287,27 @@ inline string crtrim(string s) {{ rtrim(s); return s; }}
 void solvethetestcase();
 
 signed main() {{
-	// comment when using scanf, printf
+	//comment when using scanf, printf
 	FAST_IO
 
-	// set the seed
-	// srand(chrono::high_resolution_clock::now().time_since_epoch().count());
+	//set the seed
+	//srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
-	// comment for input through console
+	//comment for input through console
 	fileI("input")
 
 	int t = 1;
-	// (uncomment for multiple test cases)
-	// cin >> t;
+	//(uncomment for multiple test cases)
+	//cin >> t;
 	loopl (testcase, 1, t + 1) {{
-		// (uncomment for multiple test cases)
-		// cout << "Case #" << testcase << ": ";
+		//(uncomment for multiple test cases)
+		//cout << "Case #" << testcase << ": ";
 		solvethetestcase();
     }}
 }}
 
 void solvethetestcase() {{
-    // write here
+    //write here
 }}
 
 #pragma GCC diagnostic pop""")
