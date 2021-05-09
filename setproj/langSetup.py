@@ -199,7 +199,7 @@ using namespace std;
 #define eb emplace_back
 #define ab(a) (a < 0)?(-1*(a)):(a)
 #define mset(a,b,c) loop(i,0,(b)) (a)[i]=(c)
-#define asum(a,b,c) { int i = 0; (c) = 0; repd(i, b) (c)+=(a)[i]; }
+#define asum(a,b,c) {{ int i = 0; (c) = 0; repd(i, b) (c)+=(a)[i]; }}
 #define fe first
 #define se second
 #define mp make_pair
@@ -302,13 +302,13 @@ signed main() {{
 	loopl (testcase, 1, t + 1) {{
 		//(uncomment for multiple test cases)
 		//cout << "Case #" << testcase << ": ";
-        //br;
+		//br;
 		solvethetestcase();
-	}
+	}}
 }}
 
 void solvethetestcase() {{
-    //write here
+	//write here
 }}
 
 #pragma GCC diagnostic pop""")
