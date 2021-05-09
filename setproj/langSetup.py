@@ -174,9 +174,6 @@ int main(int argc, char **argv) {
             else:
                 file.writelines(f"""//main file
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wcomment"
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -185,24 +182,24 @@ using namespace std;
 #define lD long double
 #define PI 3.1415926535897932384626
 #define INF 1e9
-#define rep(i, n) for (int (i) = 0; (i) < (int)(n); (i)++)
-#define repl(i, n) for (ll (i) = 0; (i) < (ll)(n); (i)++)
-#define repd(i, n) for (int (i) = (n) - 1; (i) >= 0; (i)--)
-#define repld(i, n) for (ll (i) = (n) - 1; (i) >= 0; (i)--)
-#define loop(i,a,b) for (int (i) = (int)(a); (i) < (int)(b); (i)++)
-#define rloop(i,a,b) for (int (i) = (int)(a); (i) <= (int)(b); (i)++)
-#define loopl(i,a,b) for (ll (i) = (ll)(a); (i) < (ll)(b); (i)++)
-#define rloopl(i,a,b) for (ll (i) = (ll)(a); (i) <= (ll)(b); ++(i))
-#define loopd(i,a,b) for (int (i) = (int)(a); (i) > (b); (i)--)
-#define rloopd(i,a,b) for (int (i) = (int)(a); (i) >= (b); (i)--)
-#define loopld(i,a,b) for (ll (i) = (ll)(a); (i) > (b); (i)--)
-#define rloopld(i,a,b) for (ll (i) = (ll)(a); (i) >= (b); (i)--)
+#define rep(i, n) for (int i = 0; i < (int)(n); i++)
+#define repl(i, n) for (ll i = 0; i < (ll)(n); i++)
+#define repd(i, n) for (int i = (n) - 1; i >= 0; i--)
+#define repld(i, n) for (ll i = (n) - 1; i >= 0; i--)
+#define loop(i,a,b) for (int i = (int)(a); i < (int)(b); i++)
+#define rloop(i,a,b) for (int i = (int)(a); i <= (int)(b); i++)
+#define loopl(i,a,b) for (ll i = (ll)(a); i < (ll)(b); i++)
+#define rloopl(i,a,b) for (ll i = (ll)(a); i <= (ll)(b); i++)
+#define loopd(i,a,b) for (int i = (int)(a); i > (b); i--)
+#define rloopd(i,a,b) for (int i = (int)(a); i >= (b); i--)
+#define loopld(i,a,b) for (ll i = (ll)(a); i > (b); i--)
+#define rloopld(i,a,b) for (ll i = (ll)(a); i >= (b); i--)
 #define wl (t) while((t)--)
 #define pb push_back
 #define eb emplace_back
 #define ab(a) (a < 0)?(-1*(a)):(a)
-#define mset(a,b,c) loop(i,0,b) (a)[(i)]=(c)
-#define asum(a,b,c) {{ int (i) = 0; (c) = 0; repd(i, b) (c)+=(a)[(i)]; }}
+#define mset(a,b,c) loop(i,0,(b)) (a)[i]=(c)
+#define asum(a,b,c) { int i = 0; (c) = 0; repd(i, b) (c)+=(a)[i]; }
 #define fe first
 #define se second
 #define mp make_pair
@@ -210,14 +207,14 @@ using namespace std;
 #define itoc(c) ((char)(((int)'0')+(c)))
 #define all(p) (p).begin(),(p).end()
 #define rall(p) (p).rbegin(),(p).rend()
-#define tr(c,it) for(__typeof__((c)).begin() (it) = (c).begin(); (it) != (c).end(); (it)++)
-#define trr(c,it) for(__typeof__((c)).rbegin() (it) = (c).rbegin(); (it) != (c).rend(); (it)++)
+#define tr(c,it) for(__typeof__((c).begin()) it = (c).begin(); it != (c).end(); ++it)
+#define trr(c,it) for(__typeof__((c).rbegin()) it = (c).rbegin(); it != (c).rend(); ++it)
 #define present(c,x) ((c).find(x) != (c).end())  // container version, log(n) for set and map
 #define cpresent(c,x) (find(all(c),(x)) != (c).end())  // works for all container
 #define mx(x,y) ((x)>(y)?(x):(y))
 #define mn(x,y) ((x)<(y)?(x):(y))
-#define rmx(a,b) ((a) = mx(a,b))
-#define rmn(a,b) ((a) = mn(a,b))
+#define rmx(a,b) ((a) = mx((a),(b)))
+#define rmn(a,b) ((a) = mn((a),(b)))
 #define mid(s,e) ((s)+((e)-(s))/2)
 #define mod(a,b) ((a)-((a)/(b))*(b))
 #define pq(type) priority_queue<type>
@@ -241,6 +238,9 @@ using namespace std;
 	ios_base::sync_with_stdio(false); \\
 	cin.tie(NULL); \\
 	cout.tie(NULL);
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcomment"
 
 typedef vector<int> vi;
 typedef vector<vector<int>> vvi;
@@ -302,8 +302,9 @@ signed main() {{
 	loopl (testcase, 1, t + 1) {{
 		//(uncomment for multiple test cases)
 		//cout << "Case #" << testcase << ": ";
+        //br;
 		solvethetestcase();
-    }}
+	}
 }}
 
 void solvethetestcase() {{
