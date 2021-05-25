@@ -38,10 +38,10 @@ class LangC(SetProject):
 
 #include <stdio.h>
 
-int main(int argc, char **argv) {{
+int main(int argc, char **argv) {
 \t/* code here */
 \treturn 0;
-}}""")
+}""")
 
         try:
             for gotFile in self.path.rglob("*.h"):
@@ -172,7 +172,7 @@ int main(int argc, char **argv) {
 \treturn 0;
 }""")
             else:
-                file.writelines(f"""//main file
+                file.writelines("""//main file
 
 #include <bits/stdc++.h>
 
@@ -207,7 +207,7 @@ using namespace std;
 #define eb emplace_back
 #define ab(a) (a < 0)?(-1*(a)):(a)
 #define mset(a,b,c) loop(i,0,(b)) (a)[i]=(c)
-#define asum(a,b,c) {{ int i = 0; (c) = 0; repd(i, b) (c)+=(a)[i]; }}
+#define asum(a,b,c) { int i = 0; (c) = 0; repd(i, b) (c)+=(a)[i]; }
 #define fe first
 #define se second
 #define mp make_pair
@@ -261,40 +261,40 @@ typedef pair<int, int> pii;
 typedef vector<pll> vpll;
 typedef vector<pii> vpii;
 mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
-int rngi(int lim) {{
+int rngi(int lim) {
 	uniform_int_distribution<int> uid(0,(lim)-1);
 	return uid(rang);
-}}
-double rngr(double lim) {{
+}
+double rngr(double lim) {
 	uniform_real_distribution<double> urd(0,(lim)-1);
 	return urd(rang);
-}}
+}
 
-template<typename T> T gcd(T a, T b) {{ return ((b)?__gcd(a,b):(a)); }}
-template<typename T> T lcm(T a, T b) {{ return ((a)*((b)/gcd(a,b))); }}
+template<typename T> T gcd(T a, T b) { return ((b)?__gcd(a,b):(a)); }
+template<typename T> T lcm(T a, T b) { return ((a)*((b)/gcd(a,b))); }
 
-inline void tokenize(const string& str, vs& out, const char&& delim) {{
+inline void tokenize(const string& str, vs& out, const char&& delim) {
 	stringstream ss(str);
 	string s;
 	while (getline(ss, s, delim)) out.pb(s);
-}}
-inline void tokenize(const string& str, vd& out, const char&& delim) {{
+}
+inline void tokenize(const string& str, vd& out, const char&& delim) {
 	stringstream ss(str);
 	for (double i; ss >> i;) {{ out.pb(i); if (ss.peek() == delim) ss.ignore(); }}
-}}
-inline void tokenize(const string& str, vi& out, const char&& delim) {{
+}
+inline void tokenize(const string& str, vi& out, const char&& delim) {
 	stringstream ss(str);
-	for (int i; ss >> i;) {{ out.pb(i); if (ss.peek() == ',') ss.ignore(); }}
-}}
-inline void ltrim(string& s) {{ s.erase(s.begin(), find_if(all(s), not1(ptr_fun<int, int>(isspace)))); }}
-inline void rtrim(string& s) {{ s.erase(find_if(rall(s), not1(ptr_fun<int, int>(isspace))).base(), s.end()); }}
-inline void trim(string& s) {{ ltrim(s); rtrim(s); }}
-inline string cltrim(string s) {{ ltrim(s); return s; }}
-inline string crtrim(string s) {{ rtrim(s); return s; }}
+	for (int i; ss >> i;) { out.pb(i); if (ss.peek() == ',') ss.ignore(); }
+}
+inline void ltrim(string& s) { s.erase(s.begin(), find_if(all(s), not1(ptr_fun<int, int>(isspace)))); }
+inline void rtrim(string& s) { s.erase(find_if(rall(s), not1(ptr_fun<int, int>(isspace))).base(), s.end()); }
+inline void trim(string& s) { ltrim(s); rtrim(s); }
+inline string cltrim(string s) { ltrim(s); return s; }
+inline string crtrim(string s) { rtrim(s); return s; }
 
 void solvethetestcase();
 
-signed main() {{
+signed main() {
 	//comment when using scanf, printf
 	FAST_IO
 
@@ -307,17 +307,17 @@ signed main() {{
 	int t = 1;
 	//(uncomment for multiple test cases)
 	//cin >> t;
-	loopl (testcase, 1, t + 1) {{
+	loopl (testcase, 1, t + 1) {
 		//(uncomment for multiple test cases)
 		//cout << "Case #" << testcase << ": ";
 		//br;
 		solvethetestcase();
-	}}
-}}
+	}
+}
 
-void solvethetestcase() {{
+void solvethetestcase() {
 	//write here
-}}
+}
 
 #pragma GCC diagnostic pop""")
 
