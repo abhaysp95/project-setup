@@ -69,10 +69,10 @@ int main(int argc, char **argv) {
 
 CC     = {self.compiler}
 CFLAG  = -Wall -std=c99
-CDFLAG = -Wall -std=c99 -g
+CDFLAG := ${{CFLAG}} -g
 LD     = {self.compiler}
-LDFLAG = -v
 LFLAG  =
+LDFLAG := ${{LFLAG}} -v
 
 
 SRC_DIR   = src
@@ -235,31 +235,34 @@ using namespace std;
 	cout << fixed << showpoint; \
 	cout << setprecision(x);
 #define nl "\\n"
-#define br cout << "\\n";
+#define br cout << "\\n"
 
 #define fileI(name) \\
-	freopen(name".in", "r", stdin);
-#define fileIO(name) \\
+	freopen(name".in", "r", stdin)
+#define fileIO(name) { \\
 	freopen(name".in", "r", stdin); \\
-	freopen(name".out", "w", stdout);
-#define FAST_IO \\
+	freopen(name".out", "w", stdout); \\
+}
+#define FAST_IO { \\
 	ios_base::sync_with_stdio(false); \\
 	cin.tie(NULL); \\
-	cout.tie(NULL);
+	cout.tie(NULL); \\
+}
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wcomment"
 
-typedef vector<int> vi;
-typedef vector<vector<int>> vvi;
-typedef vector<string> vs;
-typedef vector<vector<string>> vvs;
-typedef vector<double> vd;
-typedef vector<vector<double>> vvd;
-typedef pair<ll, ll> pll;
-typedef pair<int, int> pii;
-typedef vector<pll> vpll;
-typedef vector<pii> vpii;
+using vi = vector<int>;
+using vvi = vector<vi>;
+using vs = vector<string>;
+using vvs = vector<vs>;
+using vd = vector<double>;
+using vvd = vector<vd>;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+using vpll = vector<pll>;
+using vpii = vector<pii>;
+
 mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
 int rngi(int lim) {
 	uniform_int_distribution<int> uid(0,(lim)-1);
@@ -280,11 +283,11 @@ inline void tokenize(const string& str, vs& out, const char&& delim) {
 }
 inline void tokenize(const string& str, vd& out, const char&& delim) {
 	stringstream ss(str);
-	for (double i; ss >> i;) {{ out.pb(i); if (ss.peek() == delim) ss.ignore(); }}
+	for (double i; ss >> i;) { out.pb(i); if (ss.peek() == delim) ss.ignore(); }
 }
 inline void tokenize(const string& str, vi& out, const char&& delim) {
 	stringstream ss(str);
-	for (int i; ss >> i;) { out.pb(i); if (ss.peek() == ',') ss.ignore(); }
+	for (int i; ss >> i;) { out.pb(i); if (ss.peek() == delim) ss.ignore(); }
 }
 inline void ltrim(string& s) { s.erase(s.begin(), find_if(all(s), not1(ptr_fun<int, int>(isspace)))); }
 inline void rtrim(string& s) { s.erase(find_if(rall(s), not1(ptr_fun<int, int>(isspace))).base(), s.end()); }
@@ -296,17 +299,18 @@ void solvethetestcase();
 
 signed main() {
 	//comment when using scanf, printf
-	FAST_IO
+	FAST_IO;
 
 	//set the seed
 	//srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 	//comment for input through console
-	fileI("input")
+	fileI("input");
 
 	int t = 1;
 	//(uncomment for multiple test cases)
 	//cin >> t;
+	//cin.ignore();
 	loopl (testcase, 1, t + 1) {
 		//(uncomment for multiple test cases)
 		//cout << "Case #" << testcase << ": ";
@@ -348,10 +352,10 @@ void solvethetestcase() {
 
 CC     = {self.compiler}
 CFLAG  = -Wall -std=c++14
-CDFLAG = -Wall -std=c++14 -g
+CDFLAG := ${{CFLAG}} -g
 LD     = {self.compiler}
-LDFLAG = -v
 LFLAG  =
+LDFLAG := ${{LFLAG}} -v
 
 
 SRC_DIR   = src
