@@ -254,10 +254,12 @@ using namespace std;
 
 using vi = vector<int>;
 using vvi = vector<vi>;
-using vs = vector<string>;
-using vvs = vector<vs>;
 using vd = vector<double>;
 using vvd = vector<vd>;
+using vc = vector<char>;
+using vvc = vector<vc>;
+using vs = vector<string>;
+using vvs = vector<vs>;
 using pii = pair<int, int>;
 using pll = pair<ll, ll>;
 using vpll = vector<pll>;
@@ -276,19 +278,33 @@ double rngr(double lim) {
 template<typename T> T gcd(T a, T b) { return ((b)?__gcd(a,b):(a)); }
 template<typename T> T lcm(T a, T b) { return ((a)*((b)/gcd(a,b))); }
 
-inline void tokenize(const string& str, vs& out, const char&& delim) {
+template<typename T>
+void print_mat(const vector<vector<T>>& t) {
+	if(0 == t.size()) {
+		cout << "[WW] Empty Matrix!!!" << nl;
+		return;
+	}
+	rep(i, t.size()) {
+		rep(j, t[0].size()) cout << t[i][j] << " ";
+		br;
+	}
+}
+
+template<typename T>
+void tokenize(const string& str, vector<T>& out, const char& delim) {
+	stringstream ss(str);
+	for(char i; ss >> i;) {
+		out.pb(i);
+		if(ss.peek() == delim) ss.ignore();
+	}
+}
+template<>
+void tokenize(const string& str, vs& out, const char& delim) {
 	stringstream ss(str);
 	string s;
-	while (getline(ss, s, delim)) out.pb(s);
+	while(getline(ss, s, delim)) out.pb(s);
 }
-inline void tokenize(const string& str, vd& out, const char&& delim) {
-	stringstream ss(str);
-	for (double i; ss >> i;) { out.pb(i); if (ss.peek() == delim) ss.ignore(); }
-}
-inline void tokenize(const string& str, vi& out, const char&& delim) {
-	stringstream ss(str);
-	for (int i; ss >> i;) { out.pb(i); if (ss.peek() == delim) ss.ignore(); }
-}
+
 inline void ltrim(string& s) { s.erase(s.begin(), find_if(all(s), not1(ptr_fun<int, int>(isspace)))); }
 inline void rtrim(string& s) { s.erase(find_if(rall(s), not1(ptr_fun<int, int>(isspace))).base(), s.end()); }
 inline void trim(string& s) { ltrim(s); rtrim(s); }
