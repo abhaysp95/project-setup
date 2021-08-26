@@ -293,7 +293,7 @@ void print_mat(const vector<vector<T>>& t) {
 template<typename T>
 void tokenize(const string& str, vector<T>& out, const char& delim) {
 	stringstream ss(str);
-	for(char i; ss >> i;) {
+	for(T i; ss >> i;) {
 		out.pb(i);
 		if(ss.peek() == delim) ss.ignore();
 	}
